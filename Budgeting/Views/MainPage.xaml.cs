@@ -1,4 +1,4 @@
-﻿namespace Budgeting
+﻿namespace Budgeting.Views
 {
     public partial class MainPage : ContentPage
     {

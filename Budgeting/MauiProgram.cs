@@ -1,4 +1,8 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using Budgeting.Contracts.Services;
+using Budgeting.Services;
+using Budgeting.ViewModels;
+using Budgeting.Views;
+using Microsoft.Extensions.Logging;
 
 namespace Budgeting
 {
@@ -18,6 +22,14 @@ namespace Budgeting
 #if DEBUG
     		builder.Logging.AddDebug();
 #endif
+
+            // Pages and ViewModels
+            builder.Services.AddSingleton<AppShell>();
+            builder.Services.AddSingleton<MainPage>();
+            builder.Services.AddSingleton<MainPageViewModel>();
+
+            // Services
+            builder.Services.AddSingleton<INavigationService, NavigationService>();
 
             return builder.Build();
         }
