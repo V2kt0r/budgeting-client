@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Budgeting.Views.RegisterPage"
+             Title="RegisterPage">
+    <VerticalStackLayout>
+        <HorizontalStackLayout>
+            <Label Text="Username:" />
+            <Entry Placeholder="Enter your username" />
+        </HorizontalStackLayout>
+        <HorizontalStackLayout>
+            <Label Text="Password:" />
+            <Entry Placeholder="Enter your password" IsPassword="True" />
+        </HorizontalStackLayout>
+        <HorizontalStackLayout>
+            <Label Text="Confirm Password:" />
+            <Entry Placeholder="Confirm your password" IsPassword="True" />
+        </HorizontalStackLayout>
+        <Button Text="Register" Command="{Binding RegisterCommand}" />
+    </VerticalStackLayout>
+</ContentPage>

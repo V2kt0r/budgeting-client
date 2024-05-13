@@ -27,9 +27,17 @@ namespace Budgeting
             builder.Services.AddSingleton<AppShell>();
             builder.Services.AddSingleton<MainPage>();
             builder.Services.AddSingleton<MainPageViewModel>();
+            builder.Services.AddSingleton<SplashLoadPage>();
+            builder.Services.AddSingleton<SplashLoadPageViewModel>();
+            builder.Services.AddSingleton<LoginPage>();
+            builder.Services.AddSingleton<LoginPageViewModel>();
+            builder.Services.AddSingleton<RegisterPage>();
+            builder.Services.AddSingleton<RegisterPageViewModel>();
 
             // Services
             builder.Services.AddSingleton<INavigationService, NavigationService>();
+            builder.Services.AddSingleton<Config.Config>();
+            builder.Services.AddSingleton<IAuthService, AuthService>();
 
             return builder.Build();
         }

@@ -1,10 +1,5 @@
 ﻿using Budgeting.Contracts.Services;
 using Budgeting.ViewModels.Base;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Budgeting.ViewModels
 {

@@ -1,12 +1,17 @@
-﻿namespace Budgeting.Views
+﻿using Budgeting.ViewModels;
+
+namespace Budgeting.Views
 {
     public partial class MainPage : ContentPage
     {
         int count = 0;
+        private readonly MainPageViewModel _viewModel;
 
-        public MainPage()
+        public MainPage(MainPageViewModel viewModel)
         {
             InitializeComponent();
+            _viewModel = viewModel;
+            BindingContext = _viewModel;
         }
 
         private void OnCounterClicked(object sender, EventArgs e)
