@@ -26,44 +26,48 @@ using OpenAPIDateConverter = Org.OpenAPITools.Client.OpenAPIDateConverter;
 namespace Org.OpenAPITools.Model
 {
     /// <summary>
-    /// PurchaseCategoryCreate
+    /// TokenPair
     /// </summary>
-    [DataContract(Name = "PurchaseCategoryCreate")]
-    public partial class PurchaseCategoryCreate : IValidatableObject
+    [DataContract(Name = "TokenPair")]
+    public partial class TokenPair : IValidatableObject
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="PurchaseCategoryCreate" /> class.
+        /// Initializes a new instance of the <see cref="TokenPair" /> class.
         /// </summary>
         [JsonConstructorAttribute]
-        protected PurchaseCategoryCreate() { }
+        protected TokenPair() { }
         /// <summary>
-        /// Initializes a new instance of the <see cref="PurchaseCategoryCreate" /> class.
+        /// Initializes a new instance of the <see cref="TokenPair" /> class.
         /// </summary>
-        /// <param name="categoryName">Name of the purchase category. (required).</param>
-        /// <param name="categoryDescription">categoryDescription.</param>
-        public PurchaseCategoryCreate(string categoryName = default(string), string categoryDescription = default(string))
+        /// <param name="accessToken">accessToken (required).</param>
+        /// <param name="refreshToken">refreshToken (required).</param>
+        public TokenPair(Token accessToken = default(Token), Token refreshToken = default(Token))
         {
-            // to ensure "categoryName" is required (not null)
-            if (categoryName == null)
+            // to ensure "accessToken" is required (not null)
+            if (accessToken == null)
             {
-                throw new ArgumentNullException("categoryName is a required property for PurchaseCategoryCreate and cannot be null");
+                throw new ArgumentNullException("accessToken is a required property for TokenPair and cannot be null");
             }
-            this.CategoryName = categoryName;
-            this.CategoryDescription = categoryDescription;
+            this.AccessToken = accessToken;
+            // to ensure "refreshToken" is required (not null)
+            if (refreshToken == null)
+            {
+                throw new ArgumentNullException("refreshToken is a required property for TokenPair and cannot be null");
+            }
+            this.RefreshToken = refreshToken;
         }
 
         /// <summary>
-        /// Name of the purchase category.
+        /// Gets or Sets AccessToken
         /// </summary>
-        /// <value>Name of the purchase category.</value>
-        [DataMember(Name = "category_name", IsRequired = true, EmitDefaultValue = true)]
-        public string CategoryName { get; set; }
+        [DataMember(Name = "access_token", IsRequired = true, EmitDefaultValue = true)]
+        public Token AccessToken { get; set; }
 
         /// <summary>
-        /// Gets or Sets CategoryDescription
+        /// Gets or Sets RefreshToken
         /// </summary>
-        [DataMember(Name = "category_description", EmitDefaultValue = true)]
-        public string CategoryDescription { get; set; }
+        [DataMember(Name = "refresh_token", IsRequired = true, EmitDefaultValue = true)]
+        public Token RefreshToken { get; set; }
 
         /// <summary>
         /// Returns the string presentation of the object
@@ -72,9 +76,9 @@ namespace Org.OpenAPITools.Model
         public override string ToString()
         {
             StringBuilder sb = new StringBuilder();
-            sb.Append("class PurchaseCategoryCreate {\n");
-            sb.Append("  CategoryName: ").Append(CategoryName).Append("\n");
-            sb.Append("  CategoryDescription: ").Append(CategoryDescription).Append("\n");
+            sb.Append("class TokenPair {\n");
+            sb.Append("  AccessToken: ").Append(AccessToken).Append("\n");
+            sb.Append("  RefreshToken: ").Append(RefreshToken).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
         }
@@ -95,12 +99,6 @@ namespace Org.OpenAPITools.Model
         /// <returns>Validation Result</returns>
         IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
         {
-            // CategoryDescription (string) maxLength
-            if (this.CategoryDescription != null && this.CategoryDescription.Length > 500)
-            {
-                yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for CategoryDescription, length must be less than 500.", new [] { "CategoryDescription" });
-            }
-
             yield break;
         }
     }
