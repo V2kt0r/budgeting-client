@@ -61,7 +61,7 @@ namespace Budgeting.Services
         public async Task<bool> LoginWithCredentialsAsync(string username = null, string password = null)
         {
             Debug.WriteLine("Attempting to login with credentials");
-            ApiResponse<Token> loginResponse = await new LoginApi(_config.Configuration).LoginForAccessTokenWithHttpInfoAsync(username: username, password: password);
+            ApiResponse<TokenPair> loginResponse = await new LoginApi(_config.Configuration).LoginForAccessTokenWithHttpInfoAsync(username: username, password: password);
             Debug.WriteLine("Login response status code: " + loginResponse.StatusCode);
             if (loginResponse.StatusCode != HttpStatusCode.OK)
             {
@@ -82,8 +82,9 @@ namespace Budgeting.Services
 
             Debug.WriteLine("Login successful");
             Debug.WriteLine("Access token: " + loginResponse.Data.AccessToken);
-            await SetAccessTokenAsync(loginResponse.Data.AccessToken);
-            var refreshToken = ExtractRefreshTokenFromCookies(loginResponse.Cookies);
+            var accessToken = loginResponse.Data.AccessToken.AccessToken;
+            await SetAccessTokenAsync(accessToken);
+            var refreshToken = loginResponse.Data.RefreshToken.AccessToken;
             Debug.WriteLine("Refresh token: " + refreshToken);
             await SetRefreshTokenAsync(refreshToken);
             return true;
@@ -106,7 +107,7 @@ namespace Budgeting.Services
             }
 
             await SetRefreshTokenAsync(refreshToken);
-            ApiResponse<Token> loginResponse = await new LoginApi(_config.Configuration).RefreshAccessTokenWithHttpInfoAsync();
+            ApiResponse<TokenPair> loginResponse = await new LoginApi(_config.Configuration).RefreshAccessTokenWithHttpInfoAsync(new Token(accessToken: refreshToken, tokenType: "bearer"));
             if (loginResponse.StatusCode != HttpStatusCode.OK)
             {
                 switch (loginResponse.StatusCode)
@@ -124,8 +125,10 @@ namespace Budgeting.Services
                 return false;
             }
 
-            var token = loginResponse.Data;
-            await SetAccessTokenAsync(token.AccessToken);
+            var newAccessToken = loginResponse.Data.AccessToken;
+            await SetAccessTokenAsync(newAccessToken.AccessToken);
+            var newRefreshToken = loginResponse.Data.RefreshToken;
+            await SetRefreshTokenAsync(newRefreshToken.AccessToken);
             return true;
         }
 
@@ -139,21 +142,6 @@ namespace Budgeting.Services
         #endregion
 
         #region Private Methods
-
-        private static string ExtractRefreshTokenFromCookies(List<Cookie> cookies)
-        {
-            Debug.WriteLine("Extracting refresh token from cookies");
-            Debug.WriteLine("Number of cookies: " + cookies.Count);
-            foreach (var cookie in cookies)
-            {
-                Debug.WriteLine("Cookie name: " + cookie.Name);
-                if (cookie.Name == RefreshTokenNameInCookies)
-                {
-                    return cookie.Value;
-                }
-            }
-            return cookies.FirstOrDefault(c => c.Name == RefreshTokenNameInCookies)?.Value;
-        }
 
         private static async Task<string> GetAccessTokenAsync()
         {
