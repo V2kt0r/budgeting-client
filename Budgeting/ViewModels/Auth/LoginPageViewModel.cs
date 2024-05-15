@@ -54,7 +54,8 @@ namespace Budgeting.ViewModels.Auth
                 return;
             }
 
-            await _navigationService.NavigateToPageAsync<MainPage>();
+            //await _navigationService.NavigateToPageAsync<MainPage>();
+            _navigationService.SetAsHomePage(new AppShell());
         }
 
         private async Task OnRegisterAsync()

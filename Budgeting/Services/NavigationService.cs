@@ -90,6 +90,11 @@ namespace Budgeting.Services
                 throw new InvalidOperationException($"Unable to resolve type {typeof(T).FullName}");
         }
 
+        public void SetAsHomePage(Page page)
+        {
+            Application.Current.MainPage = page;
+        }
+
         private async Task<bool> CanContinueNavigationAsync(bool force = false)
         {
             if (force)

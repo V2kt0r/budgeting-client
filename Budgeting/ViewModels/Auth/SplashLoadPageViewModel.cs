@@ -44,7 +44,9 @@ namespace Budgeting.ViewModels.Auth
             if (loginSuccessful)
             {
                 Debug.WriteLine("SplashLoadPageViewModel.InitializeAsync: Navigating to MainPage");
-                await _navigationService.NavigateToPageAsync<MainPage>();
+                //Application.Current.MainPage = new AppShell();
+                _navigationService.SetAsHomePage(new AppShell());
+                //await _navigationService.NavigateToPageAsync<MainPage>();
             }
             else
             {
