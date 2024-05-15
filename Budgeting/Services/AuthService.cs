@@ -44,13 +44,23 @@ namespace Budgeting.Services
 
         public async Task<bool> IsUserAuthenticatedAsync()
         {
-            ApiResponse<UserRead> currentUserResponse = await new UsersApi(_config.Configuration).GetUsersMeWithHttpInfoAsync();
-            if (currentUserResponse.StatusCode == HttpStatusCode.OK)
+            try
             {
-                _config.CurrentUser = currentUserResponse.Data;
-                return true;
+                ApiResponse<UserRead> currentUserResponse = await new UsersApi(_config.Configuration).GetUsersMeWithHttpInfoAsync();
+                
+                if (currentUserResponse.StatusCode == HttpStatusCode.OK)
+                {
+                    _config.CurrentUser = currentUserResponse.Data;
+                    return true;
+                }
+
+                return false;
             }
-            return false;
+            catch (ApiException e)
+            {
+                Debug.WriteLine("Exception when calling UsersApi.GetUsersMe: " + e.Message);
+                return false;
+            }
         }
 
         public async Task<bool> LoginAsync()
@@ -107,7 +117,9 @@ namespace Budgeting.Services
             }
 
             await SetRefreshTokenAsync(refreshToken);
+            Debug.WriteLine("Attempting to refresh access token");
             ApiResponse<TokenPair> loginResponse = await new LoginApi(_config.Configuration).RefreshAccessTokenWithHttpInfoAsync(new Token(accessToken: refreshToken, tokenType: "bearer"));
+            Debug.WriteLine("Refresh token response status code: " + loginResponse.StatusCode);
             if (loginResponse.StatusCode != HttpStatusCode.OK)
             {
                 switch (loginResponse.StatusCode)
@@ -125,10 +137,13 @@ namespace Budgeting.Services
                 return false;
             }
 
+            Debug.WriteLine("Storing new access token");
             var newAccessToken = loginResponse.Data.AccessToken;
             await SetAccessTokenAsync(newAccessToken.AccessToken);
+            Debug.WriteLine("Storing new refresh token");
             var newRefreshToken = loginResponse.Data.RefreshToken;
             await SetRefreshTokenAsync(newRefreshToken.AccessToken);
+            Debug.WriteLine("Tokens refreshed");
             return true;
         }
 

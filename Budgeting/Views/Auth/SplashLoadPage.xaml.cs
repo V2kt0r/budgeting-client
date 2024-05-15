@@ -13,10 +13,10 @@ namespace Budgeting.Views
     		BindingContext = _viewModel;
     	}
 
-        protected override async void OnAppearing()
+        protected async override void OnAppearing()
         {
-            base.OnAppearing();
-            await _viewModel.OnAppearingAsync();
+        	base.OnAppearing();
+        	await _viewModel.OnAppearingAsync();
         }
     }
 }

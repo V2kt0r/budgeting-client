@@ -1,6 +1,7 @@
 ﻿using Budgeting.Contracts.Services;
 using Budgeting.ViewModels.Base;
 using Budgeting.Views;
+using System.Diagnostics;
 
 namespace Budgeting.ViewModels.Auth
 {
@@ -9,15 +10,16 @@ namespace Budgeting.ViewModels.Auth
         #region Attributes
 
         private readonly INavigationService _navigationService;
+        private readonly IAuthService _authService;
 
         #endregion
 
         #region Constructor
 
-        public SplashLoadPageViewModel(INavigationService navigationService)
+        public SplashLoadPageViewModel(INavigationService navigationService, IAuthService authService)
         {
             _navigationService = navigationService;
-            Task.Run(async () => await InitializeAsync()).Wait();
+            _authService = authService;
         }
 
         #endregion
@@ -26,7 +28,8 @@ namespace Budgeting.ViewModels.Auth
 
         public async Task OnAppearingAsync()
         {
-            await _navigationService.NavigateToPageAsync<LoginPage>();
+            Debug.WriteLine("SplashLoadPageViewModel.OnAppearing");
+            await InitializeAsync();
         }
 
         #endregion
@@ -35,7 +38,19 @@ namespace Budgeting.ViewModels.Auth
 
         private async Task InitializeAsync()
         {
-
+            Debug.WriteLine("SplashLoadPageViewModel.InitializeAsync");
+            var loginSuccessful = await _authService.LoginWithTokenAsync();
+            Debug.WriteLine("SplashLoadPageViewModel.InitializeAsync: loginSuccessful = " + loginSuccessful);
+            if (loginSuccessful)
+            {
+                Debug.WriteLine("SplashLoadPageViewModel.InitializeAsync: Navigating to MainPage");
+                await _navigationService.NavigateToPageAsync<MainPage>();
+            }
+            else
+            {
+                Debug.WriteLine("SplashLoadPageViewModel.InitializeAsync: Navigating to LoginPage");
+                await _navigationService.NavigateToPageAsync<LoginPage>();
+            }
         }
 
         #endregion

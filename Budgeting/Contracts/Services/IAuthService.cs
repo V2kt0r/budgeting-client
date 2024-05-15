@@ -10,6 +10,7 @@ namespace Budgeting.Contracts.Services
     {
         Task<bool> IsUserAuthenticatedAsync();
         Task<bool> LoginWithCredentialsAsync(string username = null, string password = null);
+        Task<bool> LoginWithTokenAsync();
         Task LogoutAsync();
     }
 }
