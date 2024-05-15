@@ -6,11 +6,13 @@
     <VerticalStackLayout>
         <HorizontalStackLayout>
             <Label Text="Username" />
-            <Entry Placeholder="Enter your username" />
+            <Entry Placeholder="Enter your username"
+                   Text="{Binding UsernameEntry}" />
         </HorizontalStackLayout>
         <HorizontalStackLayout>
             <Label Text="Password" />
-            <Entry Placeholder="Enter your password" IsPassword="True" />
+            <Entry Placeholder="Enter your password" IsPassword="True"
+                   Text="{Binding PasswordEntry}" />
         </HorizontalStackLayout>
         <Button Text="Login" Command="{Binding LoginCommand}" />
         <Button Text="Register" Command="{Binding RegisterCommand}" />

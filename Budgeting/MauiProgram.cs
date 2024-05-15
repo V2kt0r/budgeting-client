@@ -1,6 +1,7 @@
 ﻿using Budgeting.Contracts.Services;
 using Budgeting.Services;
 using Budgeting.ViewModels;
+using Budgeting.ViewModels.Auth;
 using Budgeting.Views;
 using Microsoft.Extensions.Logging;
 

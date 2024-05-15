@@ -2,7 +2,7 @@
 using Budgeting.ViewModels.Base;
 using CommunityToolkit.Mvvm.Input;
 
-namespace Budgeting.ViewModels
+namespace Budgeting.ViewModels.Auth
 {
     public class RegisterPageViewModel : ViewModelBase
     {

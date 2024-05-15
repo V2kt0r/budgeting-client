@@ -1,4 +1,5 @@
-﻿using Org.OpenAPITools.Client;
+﻿using Org.OpenAPITools.Api;
+using Org.OpenAPITools.Client;
 using Org.OpenAPITools.Model;
 using System;
 using System.Collections.Generic;
@@ -29,13 +30,14 @@ namespace Budgeting.Config
 
         #region Constants
 
-        public const string ApiUrl = "http://localhost";
+        public const string ApiUrl = "http://192.168.0.15";
 
         #endregion
 
         #region Attributes
 
         private string _accessToken;
+        private string _refreshToken;
 
         #endregion
 
@@ -54,7 +56,20 @@ namespace Budgeting.Config
             }
         }
 
-        public string RefreshToken { get; set; }
+        public string RefreshToken
+        {
+            get
+            {
+                return _refreshToken;
+            }
+            set
+            {
+                _refreshToken = value;
+                // Add refresh-token to cookies
+            }
+        }
+
+        public UserRead CurrentUser { get; set; }
 
         public Configuration Configuration { get; set; }
 
