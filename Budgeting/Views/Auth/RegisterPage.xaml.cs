@@ -1,4 +1,4 @@
-using Budgeting.ViewModels;
+using Budgeting.ViewModels.Auth;
 
 namespace Budgeting.Views;
 

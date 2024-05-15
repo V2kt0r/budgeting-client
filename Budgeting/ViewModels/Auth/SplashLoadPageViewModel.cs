@@ -2,7 +2,7 @@
 using Budgeting.ViewModels.Base;
 using Budgeting.Views;
 
-namespace Budgeting.ViewModels
+namespace Budgeting.ViewModels.Auth
 {
     public class SplashLoadPageViewModel : ViewModelBase
     {
@@ -35,7 +35,7 @@ namespace Budgeting.ViewModels
 
         private async Task InitializeAsync()
         {
-            
+
         }
 
         #endregion
