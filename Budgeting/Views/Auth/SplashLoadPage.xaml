@@ -4,7 +4,7 @@
              x:Class="Budgeting.Views.SplashLoadPage"
              Title="SplashLoadPage"
              Shell.NavBarIsVisible="False">
-    <VerticalStackLayout>
+    <VerticalStackLayout VerticalOptions="Center">
         <ActivityIndicator IsRunning="True"
                             Color="CadetBlue" />
         <Label 

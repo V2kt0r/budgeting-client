@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Shell
+    x:Class="Budgeting.Shells.AuthorizedAppShell"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:views="clr-namespace:Budgeting.Views"
+    Shell.FlyoutBehavior="Flyout">
+
+    <Shell.FlyoutHeader>
+        <VerticalStackLayout>
+            <Image Source="dotnet_bot" WidthRequest="100" />
+            <Label HorizontalOptions="Center">
+                <Label.Triggers>
+                    <DataTrigger TargetType="Label" Binding="{Binding AuthService.IsLoggedIn}" Value="True">
+                        <Setter Property="Text" Value="Logged in" />
+                    </DataTrigger>
+                    <DataTrigger TargetType="Label" Binding="{Binding AuthService.IsLoggedIn}" Value="False">
+                        <Setter Property="Text" Value="Not logged in" />
+                    </DataTrigger>
+                </Label.Triggers>
+            </Label>
+        </VerticalStackLayout>
+    </Shell.FlyoutHeader>
+
+    <FlyoutItem Title="Thing" FlyoutDisplayOptions="AsMultipleItems">
+        <!--Main Page-->
+        <ShellContent
+            Icon="house_door_fill.svg"
+            Title="Home"
+            ContentTemplate="{DataTemplate views:MainPage}"
+            Route="MainPage" />
+    </FlyoutItem>
+
+    <MenuItem Text="Logout" Command="{Binding LogoutCommand}" />
+
+    <Shell.FlyoutFooter>
+        <Label Text="v0.1.0-alpha"
+               HorizontalOptions="Center" />
+    </Shell.FlyoutFooter>
+</Shell>

@@ -1,6 +1,4 @@
-﻿using Budgeting.Contracts.Services;
-using Budgeting.ViewModels.Auth;
-using Budgeting.Views;
+﻿using Budgeting.Shells;
 
 namespace Budgeting
 {
@@ -10,7 +8,7 @@ namespace Budgeting
         {
             InitializeComponent();
 
-            MainPage = new AppShell();
+            MainPage = new UnauthorizedAppShell();
         }
     }
 }

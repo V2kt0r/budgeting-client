@@ -1,14 +1,16 @@
 ﻿using Budgeting.Contracts.Services;
 using Budgeting.Helpers;
+using CommunityToolkit.Mvvm.ComponentModel;
 using Org.OpenAPITools.Api;
 using Org.OpenAPITools.Client;
 using Org.OpenAPITools.Model;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.Net;
 
 namespace Budgeting.Services
 {
-    public class AuthService : IAuthService
+    public partial class AuthService : ObservableObject, IAuthService
     {
         #region Constants
 
@@ -23,6 +25,8 @@ namespace Budgeting.Services
 
         private readonly Config.Config _config;
         private readonly INavigationService _navigationService;
+        [ObservableProperty]
+        private bool _isLoggedIn = false;
 
         #endregion
 
@@ -87,6 +91,7 @@ namespace Budgeting.Services
                         // Show error message
                         break;
                 }
+                IsLoggedIn = false;
                 return false;
             }
 
@@ -97,6 +102,7 @@ namespace Budgeting.Services
             var refreshToken = loginResponse.Data.RefreshToken.AccessToken;
             Debug.WriteLine("Refresh token: " + refreshToken);
             await SetRefreshTokenAsync(refreshToken);
+            IsLoggedIn = true;
             return true;
         }
 
@@ -105,6 +111,7 @@ namespace Budgeting.Services
             var accessToken = await GetAccessTokenAsync();
             if (!string.IsNullOrEmpty(accessToken) && !IsTokenNearExpiration(accessToken) && await IsUserAuthenticatedAsync())
             {
+                IsLoggedIn = true;
                 return true;
             }
 
@@ -113,6 +120,7 @@ namespace Budgeting.Services
             {
                 // Navigate to login page
                 await _navigationService.NavigateToPageAsync<Views.LoginPage>();
+                IsLoggedIn = false;
                 return false;
             }
 
@@ -134,6 +142,7 @@ namespace Budgeting.Services
                         // Show error message
                         break;
                 }
+                IsLoggedIn = false;
                 return false;
             }
 
@@ -144,6 +153,7 @@ namespace Budgeting.Services
             var newRefreshToken = loginResponse.Data.RefreshToken;
             await SetRefreshTokenAsync(newRefreshToken.AccessToken);
             Debug.WriteLine("Tokens refreshed");
+            IsLoggedIn = true;
             return true;
         }
 
@@ -152,6 +162,7 @@ namespace Budgeting.Services
             await new LoginApi(_config.Configuration).LogoutAsync();
             SecureStorage.Remove(AccessTokenNameInSecureStorage);
             SecureStorage.Remove(RefreshTokenNameInSecureStorage);
+            IsLoggedIn = false;
         }
 
         #endregion

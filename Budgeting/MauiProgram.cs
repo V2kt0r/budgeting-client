@@ -1,7 +1,9 @@
 ﻿using Budgeting.Contracts.Services;
 using Budgeting.Services;
+using Budgeting.Shells;
 using Budgeting.ViewModels;
 using Budgeting.ViewModels.Auth;
+using Budgeting.ViewModels.Shells;
 using Budgeting.Views;
 using Microsoft.Extensions.Logging;
 
@@ -24,16 +26,22 @@ namespace Budgeting
     		builder.Logging.AddDebug();
 #endif
 
+            // Shells and ViewModels
+            builder.Services.AddTransient<AuthorizedAppShell>();
+            builder.Services.AddTransient<AuthorizedAppShellViewModel>();
+            builder.Services.AddTransient<UnauthorizedAppShell>();
+            builder.Services.AddTransient<UnauthorizedAppShellViewModel>();
+
+
             // Pages and ViewModels
-            builder.Services.AddSingleton<AppShell>();
             builder.Services.AddSingleton<MainPage>();
             builder.Services.AddSingleton<MainPageViewModel>();
             builder.Services.AddSingleton<SplashLoadPage>();
             builder.Services.AddSingleton<SplashLoadPageViewModel>();
-            builder.Services.AddSingleton<LoginPage>();
-            builder.Services.AddSingleton<LoginPageViewModel>();
-            builder.Services.AddSingleton<RegisterPage>();
-            builder.Services.AddSingleton<RegisterPageViewModel>();
+            builder.Services.AddTransient<LoginPage>();
+            builder.Services.AddTransient<LoginPageViewModel>();
+            builder.Services.AddTransient<RegisterPage>();
+            builder.Services.AddTransient<RegisterPageViewModel>();
 
             // Services
             builder.Services.AddSingleton<INavigationService, NavigationService>();

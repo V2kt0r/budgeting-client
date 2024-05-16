@@ -1,8 +1,9 @@
 ﻿using Budgeting.Contracts.Services;
+using Budgeting.Shells;
 using Budgeting.ViewModels.Base;
 using Budgeting.Views;
 using CommunityToolkit.Mvvm.Input;
-using System.Diagnostics;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Budgeting.ViewModels.Auth
 {
@@ -18,7 +19,6 @@ namespace Budgeting.ViewModels.Auth
         #region Properties
 
         public IRelayCommand LoginCommand => new AsyncRelayCommand(OnLoginAsync);
-        public IRelayCommand RegisterCommand => new AsyncRelayCommand(OnRegisterAsync);
         public string UsernameEntry { get; set; } = string.Empty;
         public string PasswordEntry { get; set; } = string.Empty;
 
@@ -55,12 +55,8 @@ namespace Budgeting.ViewModels.Auth
                 return;
             }
 
-            await Shell.Current.GoToAsync($"///{nameof(MainPage)}");
-        }
-
-        private async Task OnRegisterAsync()
-        {
-            await Shell.Current.GoToAsync($"{nameof(RegisterPage)}");
+            //await Shell.Current.GoToAsync($"///{nameof(MainPage)}");
+            Application.Current.MainPage = IPlatformApplication.Current.Services.GetService<AuthorizedAppShell>();
         }
 
         #endregion

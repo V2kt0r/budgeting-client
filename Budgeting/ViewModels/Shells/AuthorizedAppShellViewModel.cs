@@ -4,28 +4,27 @@ using Budgeting.ViewModels.Base;
 using CommunityToolkit.Mvvm.Input;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Budgeting.ViewModels
+namespace Budgeting.ViewModels.Shells
 {
-    public partial class MainPageViewModel : ViewModelBase
+    public class AuthorizedAppShellViewModel : ViewModelBase
     {
         #region Attributes
 
-        private readonly INavigationService _navigationService;
         private readonly IAuthService _authService;
 
         #endregion
 
         #region Properties
 
+        public IAuthService AuthService => _authService;
         public IRelayCommand LogoutCommand => new AsyncRelayCommand(OnLogoutAsync);
 
         #endregion
 
         #region Constructor
 
-        public MainPageViewModel(INavigationService navigationService, IAuthService authService)
+        public AuthorizedAppShellViewModel(IAuthService authService)
         {
-            _navigationService = navigationService;
             _authService = authService;
         }
 

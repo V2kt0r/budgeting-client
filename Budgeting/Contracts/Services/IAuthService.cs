@@ -8,6 +8,7 @@ namespace Budgeting.Contracts.Services
 {
     public interface IAuthService
     {
+        public bool IsLoggedIn { get; }
         Task<bool> IsUserAuthenticatedAsync();
         Task<bool> LoginWithCredentialsAsync(string username = null, string password = null);
         Task<bool> LoginWithTokenAsync();

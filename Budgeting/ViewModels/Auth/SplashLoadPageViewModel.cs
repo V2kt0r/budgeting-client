@@ -1,6 +1,8 @@
 ﻿using Budgeting.Contracts.Services;
+using Budgeting.Shells;
 using Budgeting.ViewModels.Base;
 using Budgeting.Views;
+using Microsoft.Extensions.DependencyInjection;
 using System.Diagnostics;
 
 namespace Budgeting.ViewModels.Auth
@@ -40,7 +42,8 @@ namespace Budgeting.ViewModels.Auth
             var loginSuccessful = await _authService.LoginWithTokenAsync();
             if (loginSuccessful)
             {
-                await Shell.Current.GoToAsync($"///{nameof(MainPage)}");
+                //await Shell.Current.GoToAsync($"///{nameof(MainPage)}");
+                Application.Current.MainPage = IPlatformApplication.Current.Services.GetService<AuthorizedAppShell>();
             }
             else
             {

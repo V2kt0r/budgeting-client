@@ -60,6 +60,9 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <MauiXaml Update="Shells\UnauthorizedAppShell.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="Views\Auth\LoginPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
@@ -73,6 +76,15 @@
 
 	<ItemGroup>
 	  <Folder Include="Controls\" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Compile Update="Shells\AuthorizedAppShell.xaml.cs">
+	    <DependentUpon>AuthorizedAppShell.xaml</DependentUpon>
+	  </Compile>
+	  <Compile Update="Shells\UnauthorizedAppShell.xaml.cs">
+	    <DependentUpon>UnauthorizedAppShell.xaml</DependentUpon>
+	  </Compile>
 	</ItemGroup>
 
 </Project>
