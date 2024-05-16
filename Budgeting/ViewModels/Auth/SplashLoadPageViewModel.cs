@@ -28,7 +28,6 @@ namespace Budgeting.ViewModels.Auth
 
         public async Task OnAppearingAsync()
         {
-            Debug.WriteLine("SplashLoadPageViewModel.OnAppearing");
             await InitializeAsync();
         }
 
@@ -38,20 +37,14 @@ namespace Budgeting.ViewModels.Auth
 
         private async Task InitializeAsync()
         {
-            Debug.WriteLine("SplashLoadPageViewModel.InitializeAsync");
             var loginSuccessful = await _authService.LoginWithTokenAsync();
-            Debug.WriteLine("SplashLoadPageViewModel.InitializeAsync: loginSuccessful = " + loginSuccessful);
             if (loginSuccessful)
             {
-                Debug.WriteLine("SplashLoadPageViewModel.InitializeAsync: Navigating to MainPage");
-                //Application.Current.MainPage = new AppShell();
-                _navigationService.SetAsHomePage(new AppShell());
-                //await _navigationService.NavigateToPageAsync<MainPage>();
+                await Shell.Current.GoToAsync($"///{nameof(MainPage)}");
             }
             else
             {
-                Debug.WriteLine("SplashLoadPageViewModel.InitializeAsync: Navigating to LoginPage");
-                await _navigationService.NavigateToPageAsync<LoginPage>();
+                await Shell.Current.GoToAsync($"///{nameof(LoginPage)}");
             }
         }
 

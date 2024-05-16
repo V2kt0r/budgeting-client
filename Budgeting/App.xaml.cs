@@ -6,12 +6,11 @@ namespace Budgeting
 {
     public partial class App : Application
     {
-        public App(SplashLoadPageViewModel splashLoadPageViewModel)
+        public App()
         {
             InitializeComponent();
 
-            //MainPage = new AppShell();
-            MainPage = new SplashLoadPage(splashLoadPageViewModel);
+            MainPage = new AppShell();
         }
     }
 }

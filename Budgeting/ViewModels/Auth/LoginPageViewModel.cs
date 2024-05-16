@@ -2,6 +2,7 @@
 using Budgeting.ViewModels.Base;
 using Budgeting.Views;
 using CommunityToolkit.Mvvm.Input;
+using System.Diagnostics;
 
 namespace Budgeting.ViewModels.Auth
 {
@@ -54,13 +55,12 @@ namespace Budgeting.ViewModels.Auth
                 return;
             }
 
-            //await _navigationService.NavigateToPageAsync<MainPage>();
-            _navigationService.SetAsHomePage(new AppShell());
+            await Shell.Current.GoToAsync($"///{nameof(MainPage)}");
         }
 
         private async Task OnRegisterAsync()
         {
-            await _navigationService.NavigateToPageAsync<RegisterPage>();
+            await Shell.Current.GoToAsync($"{nameof(RegisterPage)}");
         }
 
         #endregion

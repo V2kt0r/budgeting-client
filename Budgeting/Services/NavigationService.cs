@@ -63,6 +63,7 @@ namespace Budgeting.Services
 
         public async Task NavigateToPageAsync<T>(object parameter = null) where T : Page
         {
+            Debug.WriteLine($"Navigating to {typeof(T).FullName}");
             var toPage = ResolvePage<T>();
 
             if (toPage is not null)
@@ -76,10 +77,12 @@ namespace Budgeting.Services
                 //Get VM of the toPage
                 var toViewModel = GetPageViewModelBase(toPage);
 
+                Debug.WriteLine($"Calling OnNavigatingTo on {toViewModel.GetType().FullName} with parameter {parameter}");
                 //Call navigatingTo on VM, passing in the parameter
                 if (toViewModel is not null)
                     await toViewModel.OnNavigatingTo(parameter);
 
+                Debug.WriteLine($"Pushing {toPage.GetType().FullName} to the navigation stack");
                 //Navigate to requested page
                 await Navigation.PushAsync(toPage, true);
 

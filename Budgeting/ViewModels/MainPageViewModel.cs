@@ -17,7 +17,7 @@ namespace Budgeting.ViewModels
 
         #region Properties
 
-        public IRelayCommand LogoutCommand => new RelayCommand(OnLogout);
+        public IRelayCommand LogoutCommand => new AsyncRelayCommand(OnLogoutAsync);
 
         #endregion
 
@@ -37,9 +37,10 @@ namespace Budgeting.ViewModels
 
         #region Private Methods
 
-        private void OnLogout()
+        private async Task OnLogoutAsync()
         {
-            _navigationService.SetAsHomePage(new LoginPage(new LoginPageViewModel(_navigationService, _authService)));
+            await _authService.LogoutAsync();
+            await Shell.Current.GoToAsync($"///{nameof(LoginPage)}");
         }
 
         #endregion
