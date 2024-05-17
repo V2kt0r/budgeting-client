@@ -4,7 +4,7 @@
              x:Class="Budgeting.Views.LoginPage"
              Title="LoginPage"
              Shell.NavBarIsVisible="False">
-    <VerticalStackLayout>
+    <VerticalStackLayout VerticalOptions="Center">
         <HorizontalStackLayout>
             <Label Text="Username" />
             <Entry Placeholder="Enter your username"

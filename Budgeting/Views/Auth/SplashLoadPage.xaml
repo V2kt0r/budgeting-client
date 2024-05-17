@@ -6,7 +6,7 @@
              Shell.NavBarIsVisible="False">
     <VerticalStackLayout VerticalOptions="Center">
         <ActivityIndicator IsRunning="True"
-                            Color="CadetBlue" />
+                           Color="CadetBlue" />
         <Label 
             Text="Loading..."
             VerticalOptions="Center" 

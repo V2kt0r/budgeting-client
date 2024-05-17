@@ -1,11 +1,5 @@
-﻿using Org.OpenAPITools.Api;
-using Org.OpenAPITools.Client;
+﻿using Org.OpenAPITools.Client;
 using Org.OpenAPITools.Model;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Budgeting.Config
 {
@@ -30,7 +24,7 @@ namespace Budgeting.Config
 
         #region Constants
 
-        public const string ApiUrl = "http://192.168.0.15";
+        public const string ApiUrl = "http://192.168.220.209";
 
         #endregion
 

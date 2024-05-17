@@ -14,6 +14,12 @@ namespace Budgeting.Views
             BindingContext = _viewModel;
         }
 
+        protected async override void OnAppearing()
+        {
+            base.OnAppearing();
+            await _viewModel.OnAppearingAsync();
+        }
+
         private void OnCounterClicked(object sender, EventArgs e)
         {
             count++;
