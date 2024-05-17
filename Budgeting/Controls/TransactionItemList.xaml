@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:models="clr-namespace:Org.OpenAPITools.Model"
+             xmlns:controls="clr-namespace:Budgeting.Controls"
+             x:Class="Budgeting.Controls.TransactionItemList"
+             x:Name="this">
+    <VerticalStackLayout BindableLayout.ItemsSource="{Binding Source={x:Reference this}, Path=TransactionItems}"
+                         Spacing="8"
+                         HorizontalOptions="Center">
+        <BindableLayout.ItemTemplate>
+            <DataTemplate x:DataType="models:TransactionItemRead">
+                <Border StrokeThickness="0">
+                    <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="16" />
+                    </Border.StrokeShape>
+
+                    <Border.GestureRecognizers>
+                        <TapGestureRecognizer NumberOfTapsRequired="1"
+                                              Command="{Binding Source={x:Reference this}, Path=TransactionItemSelectedCommand}"
+                                              CommandParameter="{Binding .}" />
+                    </Border.GestureRecognizers>
+
+                    <Grid Padding="8"
+                          ColumnSpacing="16">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+
+                        <VerticalStackLayout Grid.Column="0"
+                                             Spacing="4"
+                                             VerticalOptions="Center">
+                            <Label Text="{Binding Name}"
+                                   LineBreakMode="TailTruncation" />
+                            <Label Text="{Binding Description}"
+                                   FontAttributes="Italic"
+                                   LineBreakMode="TailTruncation" />
+                        </VerticalStackLayout>
+
+                        <HorizontalStackLayout Grid.Column="1"
+                                               Spacing="4">
+                            <Label Text="{Binding Amount}"
+                                   VerticalOptions="Center" />
+
+                            <Label Text="{Binding Source={x:Reference this}, Path=Transaction.Currency}"
+                                   VerticalOptions="Center" />
+                        </HorizontalStackLayout>
+
+                        <controls:TagPills Grid.Column="2"
+                                           Tags="{Binding TagNames}"
+                                           VerticalOptions="Center"/>
+
+                        <VerticalStackLayout Grid.Column="3"
+                                             VerticalOptions="Center">
+                            <Label Text="{Binding CategoryName}" />
+                            <Label Text="{Binding CategoryDescription}" />
+                        </VerticalStackLayout>
+                    </Grid>
+                </Border>
+            </DataTemplate>
+        </BindableLayout.ItemTemplate>
+
+        <BindableLayout.EmptyView>
+            <controls:If Condition="{Binding Source={x:Reference this}, Path=FinishedLoading}">
+                <controls:If.True>
+                    <Label Text="No transaction items found"
+                           HorizontalOptions="Center"
+                           VerticalOptions="Center" />
+                </controls:If.True>
+                <controls:If.False>
+                    <VerticalStackLayout HorizontalOptions="Center"
+                                         VerticalOptions="Center">
+                        <ActivityIndicator IsRunning="True"
+                                           Color="CadetBlue" />
+                        <Label Text="Loading transaction items..." />
+                    </VerticalStackLayout>
+                </controls:If.False>
+            </controls:If>
+        </BindableLayout.EmptyView>
+    </VerticalStackLayout>
+</ContentView>

@@ -7,9 +7,12 @@ public partial class TransactionList : ContentView
 {
     #region Bindable Properties
 
-	public static readonly BindableProperty TransactionsProperty = BindableProperty.Create(nameof(Transactions), typeof(IEnumerable<TransactionRead>), typeof(TransactionList), default(IEnumerable<TransactionRead>));
-	public static readonly BindableProperty TransactionSelectedCommandProperty = BindableProperty.Create(nameof(TransactionSelectedCommand), typeof(IRelayCommand<TransactionRead>), typeof(TransactionList));
-	public static readonly BindableProperty FinishedLoadingProperty = BindableProperty.Create(nameof(FinishedLoading), typeof(bool), typeof(TransactionList), false);
+	public static readonly BindableProperty TransactionsProperty = 
+		BindableProperty.Create(nameof(Transactions), typeof(IEnumerable<TransactionRead>), typeof(TransactionList), default(IEnumerable<TransactionRead>));
+	public static readonly BindableProperty TransactionSelectedCommandProperty = 
+		BindableProperty.Create(nameof(TransactionSelectedCommand), typeof(IRelayCommand<TransactionRead>), typeof(TransactionList));
+	public static readonly BindableProperty FinishedLoadingProperty = 
+		BindableProperty.Create(nameof(FinishedLoading), typeof(bool), typeof(TransactionList), false);
 
     #endregion
 

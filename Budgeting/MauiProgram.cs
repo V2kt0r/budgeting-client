@@ -34,14 +34,17 @@ namespace Budgeting
 
 
             // Pages and ViewModels
-            builder.Services.AddSingleton<MainPage>();
-            builder.Services.AddSingleton<MainPageViewModel>();
             builder.Services.AddSingleton<SplashLoadPage>();
             builder.Services.AddSingleton<SplashLoadPageViewModel>();
             builder.Services.AddTransient<LoginPage>();
             builder.Services.AddTransient<LoginPageViewModel>();
             builder.Services.AddTransient<RegisterPage>();
             builder.Services.AddTransient<RegisterPageViewModel>();
+
+            builder.Services.AddSingleton<MainPage>();
+            builder.Services.AddSingleton<MainPageViewModel>();
+            builder.Services.AddSingleton<TransactionDetailPage>();
+            builder.Services.AddSingleton<TransactionDetailPageViewModel>();
 
             // Services
             builder.Services.AddSingleton<INavigationService, NavigationService>();

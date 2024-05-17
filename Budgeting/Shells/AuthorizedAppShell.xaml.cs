@@ -14,7 +14,8 @@ namespace Budgeting.Shells
             BindingContext = _viewModel;
 
             // Register routes for the view models
-            Routing.RegisterRoute("MainPage", typeof(MainPage));
+            Routing.RegisterRoute(nameof(MainPage), typeof(MainPage));
+            Routing.RegisterRoute(nameof(TransactionDetailPage), typeof(TransactionDetailPage));
         }
     }
 }

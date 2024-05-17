@@ -60,6 +60,12 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <MauiXaml Update="Controls\TagPills.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Controls\TransactionItemList.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="Controls\TransactionList.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
@@ -75,9 +81,15 @@
 	  <MauiXaml Update="Views\Auth\SplashLoadPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	  <MauiXaml Update="Views\TransactionDetailPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	</ItemGroup>
 
 	<ItemGroup>
+	  <Compile Update="Controls\TagPills.xaml.cs">
+	    <DependentUpon>TagPills.xaml</DependentUpon>
+	  </Compile>
 	  <Compile Update="Shells\AuthorizedAppShell.xaml.cs">
 	    <DependentUpon>AuthorizedAppShell.xaml</DependentUpon>
 	  </Compile>

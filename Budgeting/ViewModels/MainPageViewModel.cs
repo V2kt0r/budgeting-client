@@ -1,6 +1,7 @@
 ﻿using Budgeting.Contracts.Services;
 using Budgeting.Shells;
 using Budgeting.ViewModels.Base;
+using Budgeting.Views;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Org.OpenAPITools.Api;
@@ -67,7 +68,11 @@ namespace Budgeting.ViewModels
 
         private async Task OnTransactionSelectedAsync(TransactionRead transaction)
         {
-            throw new NotImplementedException();
+            var navigationParameters = new Dictionary<string, object>
+            {
+                { "Transaction", transaction }
+            };
+            await Shell.Current.GoToAsync($"{nameof(TransactionDetailPage)}", parameters: navigationParameters);
         }
 
         private async Task LoadTransactionsAsync()
