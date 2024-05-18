@@ -1,7 +1,11 @@
 ﻿using Budgeting.Contracts.Services;
 using Budgeting.Shells;
 using Budgeting.ViewModels.Base;
+using Budgeting.ViewModels.Popups;
 using Budgeting.Views;
+using Budgeting.Views.Popups;
+using CommunityToolkit.Maui.Core;
+using CommunityToolkit.Maui.Views;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Org.OpenAPITools.Api;
@@ -18,6 +22,7 @@ namespace Budgeting.ViewModels
         private readonly INavigationService _navigationService;
         private readonly IAuthService _authService;
         private readonly Config.Config _config;
+        private readonly IPopupService _popupService;
 
         [ObservableProperty]
         private IEnumerable<TransactionRead> _transactions;
@@ -34,16 +39,18 @@ namespace Budgeting.ViewModels
 
         public IRelayCommand LogoutCommand => new AsyncRelayCommand(OnLogoutAsync);
         public IRelayCommand TransactionSelectedCommand => new AsyncRelayCommand<TransactionRead>(OnTransactionSelectedAsync);
+        public IRelayCommand AddTransactionCommand => new AsyncRelayCommand(OnAddTransactionAsync);
 
         #endregion
 
         #region Constructor
 
-        public MainPageViewModel(INavigationService navigationService, IAuthService authService, Config.Config config)
+        public MainPageViewModel(INavigationService navigationService, IAuthService authService, Config.Config config, IPopupService popupService)
         {
             _navigationService = navigationService;
             _authService = authService;
             _config = config;
+            _popupService = popupService;
         }
 
         #endregion
@@ -58,22 +65,6 @@ namespace Budgeting.ViewModels
         #endregion
 
         #region Private Methods
-
-        private async Task OnLogoutAsync()
-        {
-            await _authService.LogoutAsync();
-            //await Shell.Current.GoToAsync($"///{nameof(LoginPage)}");
-            Application.Current.MainPage = IPlatformApplication.Current.Services.GetService<UnauthorizedAppShell>();
-        }
-
-        private async Task OnTransactionSelectedAsync(TransactionRead transaction)
-        {
-            var navigationParameters = new Dictionary<string, object>
-            {
-                { "Transaction", transaction }
-            };
-            await Shell.Current.GoToAsync($"{nameof(TransactionDetailPage)}", parameters: navigationParameters);
-        }
 
         private async Task LoadTransactionsAsync()
         {
@@ -94,6 +85,38 @@ namespace Budgeting.ViewModels
             }
 
             FinishedLoadingTransactions = true;
+        }
+
+        private async Task OnLogoutAsync()
+        {
+            await _authService.LogoutAsync();
+            //await Shell.Current.GoToAsync($"///{nameof(LoginPage)}");
+            Application.Current.MainPage = IPlatformApplication.Current.Services.GetService<UnauthorizedAppShell>();
+        }
+
+        private async Task OnTransactionSelectedAsync(TransactionRead transaction)
+        {
+            var navigationParameters = new Dictionary<string, object>
+            {
+                { "Transaction", transaction }
+            };
+            await Shell.Current.GoToAsync($"{nameof(TransactionDetailPage)}", parameters: navigationParameters);
+        }
+
+        private async Task OnAddTransactionAsync()
+        {
+            Debug.WriteLine("Fetching AddTransactionPopup");
+            var addTransactionPopup = IPlatformApplication.Current.Services.GetService<AddTransactionPopup>();
+            if (addTransactionPopup is null)
+            {
+                Debug.WriteLine("AddTransactionPopup not found");
+                addTransactionPopup = new AddTransactionPopup(new AddTransactionPopupViewModel(_config));
+                Debug.WriteLine("Created");
+            }
+
+            //await Shell.Current.CurrentPage.ShowPopupAsync(addTransactionPopup);
+            Debug.WriteLine("Showing popup");
+            await _popupService.ShowPopupAsync<AddTransactionPopupViewModel>();
         }
 
         #endregion

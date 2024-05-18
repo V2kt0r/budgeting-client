@@ -20,6 +20,7 @@ namespace Budgeting.ViewModels
         #region Properties
 
         public IRelayCommand TransactionItemSelectedCommand => new AsyncRelayCommand<TransactionItemRead>(OnTransactionItemSelectedAsync);
+        public IRelayCommand AddTransactionItemCommand => new AsyncRelayCommand<TransactionRead>(OnAddTransactionItemAsync);
 
         #endregion
 
@@ -39,6 +40,11 @@ namespace Budgeting.ViewModels
         #region Private Methods
 
         private async Task OnTransactionItemSelectedAsync(TransactionItemRead transactionItem)
+        {
+            throw new NotImplementedException();
+        }
+
+        private async Task OnAddTransactionItemAsync(TransactionRead transaction)
         {
             throw new NotImplementedException();
         }

@@ -3,8 +3,11 @@ using Budgeting.Services;
 using Budgeting.Shells;
 using Budgeting.ViewModels;
 using Budgeting.ViewModels.Auth;
+using Budgeting.ViewModels.Popups;
 using Budgeting.ViewModels.Shells;
 using Budgeting.Views;
+using Budgeting.Views.Popups;
+using CommunityToolkit.Maui;
 using Microsoft.Extensions.Logging;
 
 namespace Budgeting
@@ -16,6 +19,7 @@ namespace Budgeting
             var builder = MauiApp.CreateBuilder();
             builder
                 .UseMauiApp<App>()
+                .UseMauiCommunityToolkit()
                 .ConfigureFonts(fonts =>
                 {
                     fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
@@ -32,7 +36,6 @@ namespace Budgeting
             builder.Services.AddTransient<UnauthorizedAppShell>();
             builder.Services.AddTransient<UnauthorizedAppShellViewModel>();
 
-
             // Pages and ViewModels
             builder.Services.AddSingleton<SplashLoadPage>();
             builder.Services.AddSingleton<SplashLoadPageViewModel>();
@@ -45,6 +48,11 @@ namespace Budgeting
             builder.Services.AddSingleton<MainPageViewModel>();
             builder.Services.AddSingleton<TransactionDetailPage>();
             builder.Services.AddSingleton<TransactionDetailPageViewModel>();
+
+            // Popups and ViewModels
+            builder.Services.AddTransientPopup<AddTransactionPopup, AddTransactionPopupViewModel>();
+            //builder.Services.AddTransient<AddTransactionPopup>();
+            //builder.Services.AddTransient<AddTransactionPopupViewModel>();
 
             // Services
             builder.Services.AddSingleton<INavigationService, NavigationService>();
