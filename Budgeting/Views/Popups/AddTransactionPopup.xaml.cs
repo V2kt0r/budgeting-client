@@ -7,11 +7,11 @@ namespace Budgeting.Views.Popups
     {
         private readonly AddTransactionPopupViewModel _viewModel;
 
-    	public AddTransactionPopup(AddTransactionPopupViewModel viewModel)
-    	{
-    		InitializeComponent();
+        public AddTransactionPopup(AddTransactionPopupViewModel viewModel)
+        {
+            InitializeComponent();
             _viewModel = viewModel;
             BindingContext = _viewModel;
-    	}
+        }
     }
 }

@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:controls="clr-namespace:Budgeting.Controls"
+             xmlns:models="clr-namespace:Org.OpenAPITools.Model"
+             x:Class="Budgeting.Controls.EditableTransactionItem"
+             x:Name="this">
+    <Border StrokeThickness="0"
+            Background="#8ECAE6"
+            HorizontalOptions="Fill"
+            Padding="16">
+        <Border.StrokeShape>
+            <RoundRectangle CornerRadius="24" />
+        </Border.StrokeShape>
+
+        <Grid ColumnSpacing="4"
+              RowSpacing="4">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+
+            <Entry Grid.Row="0" Grid.Column="0"
+                   Placeholder="Name of the item"
+                   PlaceholderColor="#023047"
+                   Text="{Binding Source={x:Reference this}, Path=Name}"
+                   HorizontalOptions="Fill" />
+
+            <Entry Grid.Row="0" Grid.Column="1"
+                   Placeholder="Price of the item"
+                   PlaceholderColor="#023047"
+                   Text="{Binding Source={x:Reference this}, Path=Amount}"
+                   Keyboard="Numeric" />
+
+            <Entry Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2"
+                   Placeholder="Description of the item (Optional)"
+                   PlaceholderColor="#023047"
+                   Text="{Binding Source={x:Reference this}, Path=Description}" />
+
+            <controls:EditableTagNamesList Grid.Row="2" Grid.ColumnSpan="2"
+                                           TagNames="{Binding Source={x:Reference this}, Path=TagNames}" />
+
+            <Picker Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2"
+                    Title="Purchase category"
+                    TitleColor="#023047"
+                    ItemsSource="{Binding Source={x:Reference this}, Path=PurchaseCategories}"
+                    x:DataType="models:PurchaseCategoryRead"
+                    ItemDisplayBinding="{Binding CategoryName}"
+                    SelectedItem="{Binding Source={x:Reference this}, Path=PurchaseCategory}" />
+        </Grid>
+    </Border>
+</ContentView>

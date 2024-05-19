@@ -105,18 +105,9 @@ namespace Budgeting.ViewModels
 
         private async Task OnAddTransactionAsync()
         {
-            Debug.WriteLine("Fetching AddTransactionPopup");
-            var addTransactionPopup = IPlatformApplication.Current.Services.GetService<AddTransactionPopup>();
-            if (addTransactionPopup is null)
-            {
-                Debug.WriteLine("AddTransactionPopup not found");
-                addTransactionPopup = new AddTransactionPopup(new AddTransactionPopupViewModel(_config));
-                Debug.WriteLine("Created");
-            }
-
             //await Shell.Current.CurrentPage.ShowPopupAsync(addTransactionPopup);
             Debug.WriteLine("Showing popup");
-            await _popupService.ShowPopupAsync<AddTransactionPopupViewModel>();
+            var result = await _popupService.ShowPopupAsync<AddTransactionPopupViewModel>();
         }
 
         #endregion

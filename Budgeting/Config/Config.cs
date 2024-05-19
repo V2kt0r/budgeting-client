@@ -24,7 +24,7 @@ namespace Budgeting.Config
 
         #region Constants
 
-        public const string ApiUrl = "http://192.168.220.209";
+        public const string ApiUrl = "http://192.168.0.15";
 
         #endregion
 
