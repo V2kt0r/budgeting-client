@@ -78,17 +78,9 @@ namespace Budgeting.Controls
 
         private readonly Config.Config _config;
 
-        private ObservableCollection<TransactionItemCreateInternal> _transactionItemCreateInternals = new();
-
-        private TransactionItemCreateInternal _transactionItemCreateInternal = new();
-
-        private string _name = string.Empty;
-        private string _description = string.Empty;
-        private decimal? _amount = null;
-        private PurchaseCategoryRead _purchaseCategory = null;
-        private ObservableCollection<string> _tagNames = new()
+        private ObservableCollection<TransactionItemCreateInternal> _transactionItemCreateInternals = new()
         {
-            "Tag1", "TagName2", "TagLongerName", "Tag3", "Tag4", "Tag5"
+            new TransactionItemCreateInternal()
         };
 
         #endregion
@@ -99,6 +91,8 @@ namespace Budgeting.Controls
             BindableProperty.Create(nameof(TransactionItems), typeof(ObservableCollection<TransactionItemCreate>), typeof(EditableTransactionItemList), new ObservableCollection<TransactionItemCreate>());
         public static readonly BindableProperty PurchaseCategoriesProperty =
             BindableProperty.Create(nameof(PurchaseCategories), typeof(IEnumerable<PurchaseCategoryRead>), typeof(EditableTransactionItemList), default(IEnumerable<PurchaseCategoryRead>));
+        public static readonly BindableProperty LastItemProperty =
+            BindableProperty.Create(nameof(LastItem), typeof(TransactionItemCreateInternal), typeof(EditableTransactionItemList));
 
         #endregion
 
@@ -127,66 +121,13 @@ namespace Budgeting.Controls
             }
         }
 
-        public TransactionItemCreateInternal TransactionItemCreateInternal
+        public TransactionItemCreateInternal LastItem
         {
-            get => _transactionItemCreateInternal;
-            set
-            {
-                _transactionItemCreateInternal = value;
-                OnPropertyChanged(nameof(TransactionItemCreateInternal));
-            }
+            get => (TransactionItemCreateInternal)GetValue(LastItemProperty);
+            set => SetValue(LastItemProperty, value);
         }
 
-
-        public string Name
-        {
-            get => _name;
-            set
-            {
-                _name = value;
-                OnPropertyChanged(nameof(Name));
-            }
-        }
-
-        public string Description
-        {
-            get => _description;
-            set
-            {
-                _description = value;
-                OnPropertyChanged(nameof(Description));
-            }
-        }
-
-        public decimal? Amount
-        {
-            get => _amount;
-            set
-            {
-                _amount = value;
-                OnPropertyChanged(nameof(Amount));
-            }
-        }
-
-        public PurchaseCategoryRead PurchaseCategory
-        {
-            get => _purchaseCategory;
-            set
-            {
-                _purchaseCategory = value;
-                OnPropertyChanged(nameof(PurchaseCategory));
-            }
-        }
-
-        public ObservableCollection<string> TagNames
-        {
-            get => _tagNames;
-            set
-            {
-                _tagNames = value;
-                OnPropertyChanged(nameof(TagNames));
-            }
-        }
+        public TransactionItemCreateInternal NewItem => TransactionItemCreateInternals.Last();
 
         public IRelayCommand AddCommand => new AsyncRelayCommand(OnAddAsync);
         public IRelayCommand<TransactionItemCreateInternal> RemoveCommand => new RelayCommand<TransactionItemCreateInternal>(OnRemove);
@@ -200,6 +141,7 @@ namespace Budgeting.Controls
             InitializeComponent();
             _config = IPlatformApplication.Current.Services.GetService<Config.Config>();
             TransactionItemCreateInternal.PurchaseCategories = PurchaseCategories;
+            UpdateLastItem();
         }
 
         #endregion
@@ -223,28 +165,35 @@ namespace Budgeting.Controls
 
         private void OnRemove(TransactionItemCreateInternal item)
         {
+            if (item == NewItem)
+                return;
+
             var index = TransactionItemCreateInternals.IndexOf(item);
             TransactionItemCreateInternals.RemoveAt(index);
             TransactionItems.RemoveAt(index);
+            UpdateLastItem();
         }
 
         private bool NewTransactionItemIsValid()
         {
-            if (string.IsNullOrEmpty(TransactionItemCreateInternal.Name) || TransactionItemCreateInternal.Amount is null || TransactionItemCreateInternal.PurchaseCategory is null)
-                return false;
-            else
-                return true;
+            return !string.IsNullOrEmpty(NewItem.Name) && NewItem.Amount is not null && NewItem.PurchaseCategory is not null;
         }
 
         private void ProcessNewItem()
         {
-            TransactionItemCreateInternals.Add(TransactionItemCreateInternal);
-            TransactionItems.Add(TransactionItemCreateInternal.ToTransactionItemCreate());
+            TransactionItems.Add(NewItem.ToTransactionItemCreate());
+            UpdateLastItem();
         }
 
         private void ResetValues()
         {
-            TransactionItemCreateInternal = new();
+            TransactionItemCreateInternals.Add(new TransactionItemCreateInternal());
+            UpdateLastItem();
+        }
+
+        private void UpdateLastItem()
+        {
+            LastItem = NewItem;
         }
 
         #endregion

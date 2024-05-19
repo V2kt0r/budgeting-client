@@ -82,7 +82,8 @@
 
                     <controls:EditableTransactionItemList Grid.Row="8" Grid.ColumnSpan="2"
                                                           TransactionItems="{Binding TransactionItems}"
-                                                          PurchaseCategories="{Binding PurchaseCategories.Result}" />
+                                                          PurchaseCategories="{Binding PurchaseCategories.Result}"
+                                                          LastItem="{Binding LastItem, Mode=OneWayToSource}" />
                 </Grid>
             </ScrollView>
             

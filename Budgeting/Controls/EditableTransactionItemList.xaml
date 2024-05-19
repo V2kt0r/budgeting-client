@@ -11,12 +11,12 @@
             <!--Template-->
             <BindableLayout.ItemTemplate>
                 <DataTemplate x:DataType="controls:TransactionItemCreateInternal">
-                    <Grid ColumnSpacing="16">
+                    <Grid ColumnSpacing="8">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*" />
                             <ColumnDefinition Width="Auto" />
                         </Grid.ColumnDefinitions>
-                        
+
                         <controls:EditableTransactionItem Grid.Column="0"
                                                           Name="{Binding Name, Mode=TwoWay}"
                                                           Description="{Binding Description, Mode=TwoWay}"
@@ -39,14 +39,6 @@
                 </DataTemplate>
             </BindableLayout.ItemTemplate>
         </VerticalStackLayout>
-
-        <!--New item-->
-        <controls:EditableTransactionItem Name="{Binding Source={x:Reference this}, Path=TransactionItemCreateInternal.Name, Mode=TwoWay}"
-                                          Description="{Binding Source={x:Reference this}, Path=TransactionItemCreateInternal.Description, Mode=TwoWay}"
-                                          Amount="{Binding Source={x:Reference this}, Path=TransactionItemCreateInternal.Amount, Mode=TwoWay}"
-                                          TagNames="{Binding Source={x:Reference this}, Path=TransactionItemCreateInternal.TagNames, Mode=TwoWay}"
-                                          PurchaseCategory="{Binding Source={x:Reference this}, Path=TransactionItemCreateInternal.PurchaseCategory, Mode=TwoWay}"
-                                          PurchaseCategories="{Binding Source={x:Reference this}, Path=PurchaseCategories}" />
 
         <!--Add button-->
         <controls:RoundButton Text="+"

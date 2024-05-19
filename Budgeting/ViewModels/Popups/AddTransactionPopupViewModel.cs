@@ -7,6 +7,7 @@ using CommunityToolkit.Mvvm.Input;
 using Org.OpenAPITools.Api;
 using Org.OpenAPITools.Model;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 
 namespace Budgeting.ViewModels.Popups
 {
@@ -30,6 +31,9 @@ namespace Budgeting.ViewModels.Popups
 
         [ObservableProperty]
         private IEnumerable<TransactionItemCreate> _transactionItems = new ObservableCollection<TransactionItemCreate>();
+
+        [ObservableProperty]
+        private TransactionItemCreateInternal _lastItem;
 
         [ObservableProperty]
         private TransactionCreate _transactionCreate;
@@ -74,7 +78,7 @@ namespace Budgeting.ViewModels.Popups
         {
             if (obj is Popup popup)
             {
-                // TODO: save transaction
+                Debug.WriteLine($"Last item: {LastItem.Name}");
                 await popup.CloseAsync();
             }
         }
