@@ -10,7 +10,8 @@
                          HorizontalOptions="Center">
         <BindableLayout.ItemTemplate>
             <DataTemplate x:DataType="models:TransactionItemRead">
-                <Border StrokeThickness="0">
+                <Border StrokeThickness="0"
+                        BackgroundColor="#8ECAE6">
                     <Border.StrokeShape>
                         <RoundRectangle CornerRadius="16" />
                     </Border.StrokeShape>

@@ -4,7 +4,8 @@
              xmlns:models="clr-namespace:Org.OpenAPITools.Model"
              xmlns:controls="clr-namespace:Budgeting.Controls"
              x:Class="Budgeting.Views.TransactionDetailPage"
-             Title="TransactionDetailPage">
+             Title="TransactionDetailPage"
+             BackgroundColor="#219EBC">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="*" />
