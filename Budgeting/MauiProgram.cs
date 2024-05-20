@@ -8,6 +8,7 @@ using Budgeting.ViewModels.Shells;
 using Budgeting.Views;
 using Budgeting.Views.Popups;
 using CommunityToolkit.Maui;
+using Microcharts.Maui;
 using Microsoft.Extensions.Logging;
 
 namespace Budgeting
@@ -20,6 +21,7 @@ namespace Budgeting
             builder
                 .UseMauiApp<App>()
                 .UseMauiCommunityToolkit()
+                .UseMicrocharts()
                 .ConfigureFonts(fonts =>
                 {
                     fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");

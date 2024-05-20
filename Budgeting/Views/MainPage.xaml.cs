@@ -4,7 +4,6 @@ namespace Budgeting.Views
 {
     public partial class MainPage : ContentPage
     {
-        int count = 0;
         private readonly MainPageViewModel _viewModel;
 
         public MainPage(MainPageViewModel viewModel)
@@ -20,16 +19,9 @@ namespace Budgeting.Views
             await _viewModel.OnAppearingAsync();
         }
 
-        private void OnCounterClicked(object sender, EventArgs e)
+        private async void Picker_SelectedIndexChanged(object sender, EventArgs e)
         {
-            count++;
-
-            if (count == 1)
-                CounterBtn.Text = $"Clicked {count} time";
-            else
-                CounterBtn.Text = $"Clicked {count} times";
-
-            SemanticScreenReader.Announce(CounterBtn.Text);
+            await _viewModel.LoadStatisticsAsync();
         }
     }
 

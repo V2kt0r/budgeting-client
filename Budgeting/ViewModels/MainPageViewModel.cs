@@ -3,18 +3,30 @@ using Budgeting.Shells;
 using Budgeting.ViewModels.Base;
 using Budgeting.ViewModels.Popups;
 using Budgeting.Views;
-using Budgeting.Views.Popups;
 using CommunityToolkit.Maui.Core;
-using CommunityToolkit.Maui.Views;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using Microcharts;
 using Org.OpenAPITools.Api;
 using Org.OpenAPITools.Client;
 using Org.OpenAPITools.Model;
+using SkiaSharp;
+using System.Collections.ObjectModel;
 using System.Diagnostics;
 
 namespace Budgeting.ViewModels
 {
+    public partial class TimeQueryWrapper : ObservableObject
+    {
+        [ObservableProperty]
+        private DateTime? _time;
+
+        [ObservableProperty]
+        private string _title;
+
+        public DateTime? LocalTime => Time?.ToLocalTime();
+    }
+
     public partial class MainPageViewModel : ViewModelBase
     {
         #region Attributes
@@ -32,6 +44,31 @@ namespace Budgeting.ViewModels
 
         [ObservableProperty]
         private bool _finishedLoadingTransactions = false;
+
+        [ObservableProperty]
+        private bool _finishedLoadingStatistics = false;
+
+        [ObservableProperty]
+        private IEnumerable<TimeQueryWrapper> _afterPossibilities = new ObservableCollection<TimeQueryWrapper>()
+        {
+            new() {Time = DateTime.UtcNow - TimeSpan.FromDays(1), Title = "Last day"},
+            new() {Time = DateTime.UtcNow - TimeSpan.FromDays(7), Title = "Last 7 days"},
+            new() {Time = DateTime.UtcNow - TimeSpan.FromDays(30), Title = "Last month"},
+            new() {Time = DateTime.UtcNow - TimeSpan.FromDays(365), Title = "Last year"},
+            new() {Time = null, Title = "All time"}
+        };
+
+        [ObservableProperty]
+        private TimeQueryWrapper _after;
+
+        [ObservableProperty]
+        private PurchaseCategoryStatistics _purchaseCategoryStatistics;
+
+        [ObservableProperty]
+        private ChartEntry[] _entries;
+
+        [ObservableProperty]
+        private DonutChart _donutChart;
 
         #endregion
 
@@ -51,6 +88,8 @@ namespace Budgeting.ViewModels
             _authService = authService;
             _config = config;
             _popupService = popupService;
+
+            After = AfterPossibilities.Last();
         }
 
         #endregion
@@ -60,6 +99,46 @@ namespace Budgeting.ViewModels
         public async Task OnAppearingAsync()
         {
             await LoadTransactionsAsync();
+            await LoadStatisticsAsync();
+        }
+
+        public async Task LoadStatisticsAsync()
+        {
+            FinishedLoadingStatistics = false;
+
+            try
+            {
+                PurchaseCategoryStatistics = await new UserStatisticsApi(_config.Configuration).GetPurchaseCategoryStatisticsAsync(after: After.Time);
+
+                var chartEntries = new List<ChartEntry>();
+                foreach (var item in PurchaseCategoryStatistics.Items)
+                {
+                    var chartEnty = new ChartEntry((float)item.Total)
+                    {
+                        Label = item.PurchaseCategory.CategoryName,
+                        ValueLabel = item.Total.ToString(),
+                        ValueLabelColor = SKColors.White,
+                        Color = SKColor.Parse($"#{item.PurchaseCategory.Uuid.ToString().Substring(0, 6)}")
+                    };
+                    chartEntries.Add(chartEnty);
+                }
+                Entries = chartEntries.ToArray();
+                DonutChart = new DonutChart
+                {
+                    Entries = Entries,
+                    BackgroundColor = SKColors.Transparent
+                };
+            }
+            catch (ApiException apiEx)
+            {
+                Debug.WriteLine(apiEx.Message);
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex.Message);
+            }
+
+            FinishedLoadingStatistics = true;
         }
 
         #endregion
@@ -77,11 +156,11 @@ namespace Budgeting.ViewModels
             }
             catch (ApiException apiEx)
             {
-                Debug.WriteLine(apiEx);
+                Debug.WriteLine(apiEx.Message);
             }
             catch (Exception ex)
             {
-                Debug.WriteLine(ex);
+                Debug.WriteLine(ex.Message);
             }
 
             FinishedLoadingTransactions = true;
@@ -90,7 +169,6 @@ namespace Budgeting.ViewModels
         private async Task OnLogoutAsync()
         {
             await _authService.LogoutAsync();
-            //await Shell.Current.GoToAsync($"///{nameof(LoginPage)}");
             Application.Current.MainPage = IPlatformApplication.Current.Services.GetService<UnauthorizedAppShell>();
         }
 
@@ -105,7 +183,6 @@ namespace Budgeting.ViewModels
 
         private async Task OnAddTransactionAsync()
         {
-            //await Shell.Current.CurrentPage.ShowPopupAsync(addTransactionPopup);
             Debug.WriteLine("Showing popup");
             var result = await _popupService.ShowPopupAsync<AddTransactionPopupViewModel>();
             await LoadTransactionsAsync();

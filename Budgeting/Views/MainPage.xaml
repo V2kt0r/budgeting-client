@@ -2,6 +2,7 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:controls="clr-namespace:Budgeting.Controls"
+             xmlns:micro="clr-namespace:Microcharts.Maui;assembly=Microcharts.Maui"
              x:Class="Budgeting.Views.MainPage"
              BackgroundColor="#023047">
 
@@ -10,46 +11,47 @@
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
-        <ScrollView Grid.Row="0">
-            <VerticalStackLayout
-                Spacing="25"
-                Padding="30,0"
-                VerticalOptions="Center">
+        <ScrollView Grid.Row="0"
+                    Padding="0,0,0,128">
+            <Grid Padding="32, 16"
+                  RowSpacing="16">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="300" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
 
-                <Image
-                    Source="dotnet_bot.png"
-                    SemanticProperties.Description="Cute dot net bot waving hi to you!"
-                    HeightRequest="200"
-                    HorizontalOptions="Center" />
+                <Picker Grid.Row="0"
+                        Title="Time"
+                        ItemsSource="{Binding AfterPossibilities}"
+                        SelectedItem="{Binding After}"
+                        ItemDisplayBinding="{Binding Title}"
+                        SelectedIndexChanged="Picker_SelectedIndexChanged" />
 
-                <Label
-                    Text="Hello, World!"
-                    SemanticProperties.HeadingLevel="Level1"
-                    FontSize="32"
-                    HorizontalOptions="Center" />
+                <controls:If Grid.Row="1"
+                             Condition="{Binding FinishedLoadingStatistics}">
+                    <controls:If.True>
+                        <micro:ChartView HeightRequest="300" WidthRequest="300"
+                                         HorizontalOptions="Center"
+                                         Chart="{Binding DonutChart}" />
+                    </controls:If.True>
 
-                <Label
-                    Text="Welcome to .NET Multi-platform App UI"
-                    SemanticProperties.HeadingLevel="Level2"
-                    SemanticProperties.Description="Welcome to dot net Multi platform App U I"
-                    FontSize="18"
-                    HorizontalOptions="Center" />
+                    <controls:If.False>
+                        <VerticalStackLayout HorizontalOptions="Center"
+                                             VerticalOptions="Center"
+                                             Spacing="8">
+                            <ActivityIndicator IsRunning="True"
+                               Color="CadetBlue" />
+                            <Label Text="Loading statistics..." />
+                        </VerticalStackLayout>
+                    </controls:If.False>
+                </controls:If>
 
-                <Button
-                    x:Name="CounterBtn"
-                    Text="Click me"
-                    SemanticProperties.Hint="Counts the number of times you click"
-                    Clicked="OnCounterClicked"
-                    HorizontalOptions="Center" />
-
-                <Button Text="Logout"
-                        Command="{Binding LogoutCommand}" />
-
-                <controls:TransactionList Transactions="{Binding Transactions}"
+                <controls:TransactionList Grid.Row="2"
+                                          Transactions="{Binding Transactions}"
                                           TransactionSelectedCommand="{Binding TransactionSelectedCommand}"
                                           FinishedLoading="{Binding FinishedLoadingTransactions}" />
-
-            </VerticalStackLayout>
+            </Grid>
         </ScrollView>
 
         <controls:FloatingButton Grid.Row="0"
