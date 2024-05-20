@@ -18,26 +18,39 @@
             <Grid Padding="32, 16"
                   RowSpacing="16">
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto" /> <!--Group selection-->
-                    <RowDefinition Height="Auto" /> <!--Time selection-->
+                    <RowDefinition Height="Auto" /> <!--Group, Time, Currency selection-->
                     <RowDefinition Height="300" />  <!--Donut chart-->
                     <RowDefinition Height="*" />    <!--Transaction list-->
                 </Grid.RowDefinitions>
 
-                <Picker Grid.Row="0"
-                        Title="Group"
-                        ItemsSource="{Binding Source={x:Reference vm}, Path=Groups}"
-                        SelectedItem="{Binding Source={x:Reference vm}, Path=SelectedGroup}"
-                        x:DataType="models:GroupReadWithUserRole"
-                        ItemDisplayBinding="{Binding Name}" />
+                <Grid Grid.Row="0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    
+                    <Picker Grid.Column="0"
+                            Title="Group"
+                            ItemsSource="{Binding Groups}"
+                            SelectedItem="{Binding SelectedGroup}"
+                            ItemDisplayBinding="{Binding Name}"
+                            SelectedIndexChanged="GroupPicker_SelectedIndexChanged" />
 
-                <controls:TimeQueryPicker Grid.Row="1"
+                    <controls:TimeQueryPicker Grid.Column="1"
                                           Title="Time"
                                           Possibilities="{Binding AfterPossibilities}"
                                           SelectedItem="{Binding After}"
                                           SelectedItemChangedCommand="{Binding TimeSelectionChangedCommand}" />
 
-                <controls:If Grid.Row="2"
+                    <Picker Grid.Column="2"
+                            Title="Currency"
+                            ItemsSource="{Binding CurrencyOptions}"
+                            SelectedItem="{Binding Currency}"
+                            SelectedIndexChanged="CurrencyPicker_SelectedIndexChanged"/>
+                </Grid>
+
+                <controls:If Grid.Row="1"
                              Condition="{Binding FinishedLoadingStatistics}">
                     <controls:If.True>
                         <micro:ChartView HeightRequest="300" WidthRequest="300"
@@ -56,7 +69,7 @@
                     </controls:If.False>
                 </controls:If>
 
-                <controls:TransactionList Grid.Row="3"
+                <controls:TransactionList Grid.Row="2"
                                           Transactions="{Binding Transactions}"
                                           TransactionSelectedCommand="{Binding TransactionSelectedCommand}"
                                           FinishedLoading="{Binding FinishedLoadingTransactions}" />

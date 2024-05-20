@@ -22,11 +22,24 @@
                     <RowDefinition Height="*" />
                 </Grid.RowDefinitions>
 
-                <controls:TimeQueryPicker Grid.Row="0"
-                                          Title="Time"
-                                          Possibilities="{Binding AfterPossibilities}"
-                                          SelectedItem="{Binding After}"
-                                          SelectedItemChangedCommand="{Binding TimeSelectionChangedCommand}" />
+                <Grid Grid.Row="0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    
+                    <controls:TimeQueryPicker Grid.Column="0"
+                                              Title="Time"
+                                              Possibilities="{Binding AfterPossibilities}"
+                                              SelectedItem="{Binding After}"
+                                              SelectedItemChangedCommand="{Binding TimeSelectionChangedCommand}" />
+
+                    <Picker Grid.Column="1"
+                            Title="Currency"
+                            ItemsSource="{Binding CurrencyOptions}"
+                            SelectedItem="{Binding Currency}"
+                            SelectedIndexChanged="CurrencyPicker_SelectedIndexChanged"/>
+                </Grid>
 
                 <controls:If Grid.Row="1"
                              Condition="{Binding FinishedLoadingStatistics}">

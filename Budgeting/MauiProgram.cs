@@ -50,6 +50,8 @@ namespace Budgeting
             builder.Services.AddSingleton<MainPageViewModel>();
             builder.Services.AddSingleton<TransactionDetailPage>();
             builder.Services.AddSingleton<TransactionDetailPageViewModel>();
+            builder.Services.AddSingleton<GroupPage>();
+            builder.Services.AddSingleton<GroupPageViewModel>();
 
             // Popups and ViewModels
             builder.Services.AddTransientPopup<AddTransactionPopup, AddTransactionPopupViewModel>();

@@ -53,6 +53,12 @@ namespace Budgeting.ViewModels
         private TimeQueryWrapper _after;
 
         [ObservableProperty]
+        private Currency _currency = Currency.HUF;
+
+        [ObservableProperty]
+        private IEnumerable<Currency> _currencyOptions = Enum.GetValues(typeof(Currency)).Cast<Currency>();
+
+        [ObservableProperty]
         private PurchaseCategoryStatistics _purchaseCategoryStatistics;
 
         [ObservableProperty]
@@ -90,7 +96,12 @@ namespace Budgeting.ViewModels
 
         public async Task OnAppearingAsync()
         {
-            await LoadTransactionsAsync();
+            await LoadStatisticsAsync(After.Time);
+            await LoadTransactionsAsync(After.Time);
+        }
+
+        public async Task OnCurrencyChangedAsync()
+        {
             await LoadStatisticsAsync(After.Time);
         }
 
@@ -101,6 +112,7 @@ namespace Budgeting.ViewModels
         private async Task OnTimeSelectionChangedAsync(DateTime? newTime)
         {
             await LoadStatisticsAsync(newTime);
+            await LoadTransactionsAsync(newTime);
         }
 
         private async Task LoadStatisticsAsync(DateTime? after)
@@ -109,7 +121,11 @@ namespace Budgeting.ViewModels
 
             try
             {
-                PurchaseCategoryStatistics = await new UserStatisticsApi(_config.Configuration).GetPurchaseCategoryStatisticsAsync(after: after);
+                PurchaseCategoryStatistics = await new UserStatisticsApi(_config.Configuration).GetPurchaseCategoryStatisticsAsync
+                (
+                    after: after,
+                    currency: Currency
+                );
                 var chartEntries = new List<ChartEntry>();
                 foreach (var item in PurchaseCategoryStatistics.Items)
                 {
@@ -141,13 +157,17 @@ namespace Budgeting.ViewModels
             FinishedLoadingStatistics = true;
         }
 
-        private async Task LoadTransactionsAsync()
+        private async Task LoadTransactionsAsync(DateTime? after)
         {
             FinishedLoadingTransactions = false;
 
             try
             {
-                var transactionsPaginated = await new TransactionsApi(_config.Configuration).GetUserTransactionsAsync(page: Page);
+                var transactionsPaginated = await new TransactionsApi(_config.Configuration).GetUserTransactionsAsync
+                (
+                    after: after,
+                    page: Page
+                );
                 Transactions = transactionsPaginated.Data;
             }
             catch (ApiException apiEx)
@@ -181,7 +201,7 @@ namespace Budgeting.ViewModels
         {
             Debug.WriteLine("Showing popup");
             var result = await _popupService.ShowPopupAsync<AddTransactionPopupViewModel>();
-            await LoadTransactionsAsync();
+            await LoadTransactionsAsync(After.Time);
         }
 
         #endregion

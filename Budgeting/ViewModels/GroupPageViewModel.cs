@@ -44,6 +44,12 @@ namespace Budgeting.ViewModels
         private TimeQueryWrapper _after;
 
         [ObservableProperty]
+        private Currency _currency = Currency.HUF;
+
+        [ObservableProperty]
+        private IEnumerable<Currency> _currencyOptions = Enum.GetValues(typeof(Currency)).Cast<Currency>();
+
+        [ObservableProperty]
         private bool _finishedLoadingStatistics = false;
 
         [ObservableProperty]
@@ -94,6 +100,17 @@ namespace Budgeting.ViewModels
             await LoadUserGroups();
             SelectedGroup = Groups.FirstOrDefault(defaultValue: null);
             await LoadStatisticsAsync(After.Time);
+            await LoadTransactionsAsync(After.Time);
+        }
+
+        public async Task OnGroupChangedAsync()
+        {
+            await LoadTransactionsAsync(After.Time);
+        }
+
+        public async Task OnCurrencyChangedAsync()
+        {
+            await LoadStatisticsAsync(After.Time);
         }
 
         #endregion
@@ -114,6 +131,7 @@ namespace Budgeting.ViewModels
         private async Task OnTimeSelectionChanged(DateTime? newTime)
         {
             await LoadStatisticsAsync(newTime);
+            await LoadTransactionsAsync(newTime);
         }
 
         private async Task LoadStatisticsAsync(DateTime? after)
@@ -122,8 +140,12 @@ namespace Budgeting.ViewModels
 
             try
             {
-                return;
-                PurchaseCategoryStatistics = await new UserStatisticsApi(_config.Configuration).GetPurchaseCategoryStatisticsAsync(after: after);
+                PurchaseCategoryStatistics = await new GroupStatisticsApi(_config.Configuration).GetGroupPurchaseCategoryStatisticsAsync
+                (
+                    groupUuid: SelectedGroup.Uuid,
+                    after: after,
+                    currency: Currency
+                );
                 var chartEntries = new List<ChartEntry>();
                 foreach (var item in PurchaseCategoryStatistics.Items)
                 {
@@ -152,8 +174,33 @@ namespace Budgeting.ViewModels
                 Debug.WriteLine(ex.Message);
             }
 
-            // TODO: remove the comment after function has been properly implemented
-            //FinishedLoadingStatistics = true;
+            FinishedLoadingStatistics = true;
+        }
+
+        private async Task LoadTransactionsAsync(DateTime? after)
+        {
+            FinishedLoadingTransactions = false;
+
+            try
+            {
+                var transactionsPaginated = await new GroupTransactionsApi(_config.Configuration).GetGroupTransactionsAsync
+                (
+                    groupUuid: SelectedGroup.Uuid,
+                    after: after,
+                    page: Page
+                );
+                Transactions = transactionsPaginated.Data;
+            }
+            catch (ApiException apiEx)
+            {
+                Debug.WriteLine(apiEx.Message);
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex.Message);
+            }
+
+            FinishedLoadingTransactions = true;
         }
 
         private async Task OnTransactionSelectedAsync(TransactionRead transaction)

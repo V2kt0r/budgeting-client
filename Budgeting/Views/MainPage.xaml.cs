@@ -18,6 +18,11 @@ namespace Budgeting.Views
             base.OnAppearing();
             await _viewModel.OnAppearingAsync();
         }
+
+        private async void CurrencyPicker_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            await _viewModel.OnCurrencyChangedAsync();
+        }
     }
 
 }
