@@ -94,7 +94,16 @@ namespace Budgeting.ViewModels
             await LoadStatisticsAsync(After.Time);
         }
 
-        public async Task LoadStatisticsAsync(DateTime? after)
+        #endregion
+
+        #region Private Methods
+
+        private async Task OnTimeSelectionChangedAsync(DateTime? newTime)
+        {
+            await LoadStatisticsAsync(newTime);
+        }
+
+        private async Task LoadStatisticsAsync(DateTime? after)
         {
             FinishedLoadingStatistics = false;
 
@@ -130,15 +139,6 @@ namespace Budgeting.ViewModels
             }
 
             FinishedLoadingStatistics = true;
-        }
-
-        #endregion
-
-        #region Private Methods
-
-        private async Task OnTimeSelectionChangedAsync(DateTime? newTime)
-        {
-            await LoadStatisticsAsync(newTime);
         }
 
         private async Task LoadTransactionsAsync()
