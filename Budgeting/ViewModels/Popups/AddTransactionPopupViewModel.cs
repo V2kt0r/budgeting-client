@@ -5,6 +5,7 @@ using CommunityToolkit.Maui.Views;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Org.OpenAPITools.Api;
+using Org.OpenAPITools.Client;
 using Org.OpenAPITools.Model;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
@@ -24,13 +25,13 @@ namespace Budgeting.ViewModels.Popups
         private string _description = string.Empty;
 
         [ObservableProperty]
-        private int? _amount = null;
+        private decimal? _amount = null;
 
         [ObservableProperty]
         private Currency _currency = Currency.HUF;
 
         [ObservableProperty]
-        private IEnumerable<TransactionItemCreate> _transactionItems = new ObservableCollection<TransactionItemCreate>();
+        private ObservableCollection<TransactionItemCreate> _transactionItems = new();
 
         [ObservableProperty]
         private TransactionItemCreateInternal _lastItem;
@@ -78,14 +79,52 @@ namespace Budgeting.ViewModels.Popups
         {
             if (obj is Popup popup)
             {
-                Debug.WriteLine($"Last item: {LastItem.Name}");
-                await popup.CloseAsync();
+                bool added = false;
+                try
+                {
+                    if (LastItem.IsValid())
+                    {
+                        TransactionItems.Add(LastItem.ToTransactionItemCreate());
+                        added = true;
+                    }
+                    TransactionCreate = new TransactionCreate
+                    (
+                        name: Name,
+                        description: Description,
+                        amount: Amount.Value,
+                        currency: Currency,
+                        timestamp: GetTimestamp(),
+                        transactionItems: TransactionItems.ToList()
+                    );
+                    var result = await new TransactionsApi(_config.Configuration).CreateUserTransactionAsync(TransactionCreate);
+
+                    await Toaster.DisplayLongToastAsync($"Added transaction '{result.Name}' with {result.TransactionItems.Count} items.");
+                    await popup.CloseAsync();
+                }
+                catch (ApiException apiEx)
+                {
+                    await Toaster.DisplayLongToastAsync($"API error during adding transaction: {apiEx.Message}");
+                    Debug.WriteLine(apiEx.Message);
+                }
+                catch (Exception ex)
+                {
+                    await Toaster.DisplayLongToastAsync($"Error during adding transaction: {ex.Message}");
+                    Debug.WriteLine(ex.Message);
+                    throw;
+                }
+                finally
+                {
+                    if (added)
+                    {
+                        TransactionItems.RemoveAt(TransactionItems.Count - 1);
+                    }
+                }
             }
         }
 
-        private void UpdateTimestamp()
+        private DateTime GetTimestamp()
         {
-            DateTime timestamp = new(
+            return new DateTime(
                 year: Date.Year,
                 month: Date.Month,
                 day: Date.Day,
@@ -93,7 +132,6 @@ namespace Budgeting.ViewModels.Popups
                 minute: Time.Minutes,
                 second: Time.Seconds
             );
-            TransactionCreate.Timestamp = timestamp;
         }
 
         private async Task<IEnumerable<PurchaseCategoryRead>> FetchPurchaseCategoriesAsync()

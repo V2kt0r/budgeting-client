@@ -108,6 +108,7 @@ namespace Budgeting.ViewModels
             //await Shell.Current.CurrentPage.ShowPopupAsync(addTransactionPopup);
             Debug.WriteLine("Showing popup");
             var result = await _popupService.ShowPopupAsync<AddTransactionPopupViewModel>();
+            await LoadTransactionsAsync();
         }
 
         #endregion

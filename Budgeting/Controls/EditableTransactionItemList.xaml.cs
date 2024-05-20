@@ -69,6 +69,16 @@ namespace Budgeting.Controls
             return ToTransactionItemCreate(this);
         }
 
+        public static bool IsValid(TransactionItemCreateInternal item)
+        {
+            return !string.IsNullOrEmpty(item.Name) && item.Amount is not null && item.PurchaseCategory is not null;
+        }
+
+        public bool IsValid()
+        {
+            return IsValid(this);
+        }
+
         #endregion
     }
 
@@ -154,7 +164,7 @@ namespace Budgeting.Controls
 
         private async Task OnAddAsync()
         {
-            if (!NewTransactionItemIsValid())
+            if (!NewItem.IsValid())
             {
                 await Toaster.DisplayShortToastAsync("Please fill all necessary fields.");
                 return;
@@ -172,11 +182,6 @@ namespace Budgeting.Controls
             TransactionItemCreateInternals.RemoveAt(index);
             TransactionItems.RemoveAt(index);
             UpdateLastItem();
-        }
-
-        private bool NewTransactionItemIsValid()
-        {
-            return !string.IsNullOrEmpty(NewItem.Name) && NewItem.Amount is not null && NewItem.PurchaseCategory is not null;
         }
 
         private void ProcessNewItem()
