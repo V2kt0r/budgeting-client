@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:controls="clr-namespace:Budgeting.Controls"
+             x:Class="Budgeting.Controls.EditableTagNamesList"
+             x:Name="this">
+    <ScrollView Orientation="Horizontal">
+        <HorizontalStackLayout Spacing="4">
+            <HorizontalStackLayout BindableLayout.ItemsSource="{Binding Source={x:Reference this}, Path=TagNames}"
+                                   Spacing="4">
+                <BindableLayout.ItemTemplate>
+                    <DataTemplate x:DataType="x:String">
+                        <Border StrokeThickness="0"
+                                Padding="8"
+                                BackgroundColor="#FFB703"
+                                VerticalOptions="Center">
+                            <Border.StrokeShape>
+                                <RoundRectangle CornerRadius="24" />
+                            </Border.StrokeShape>
+
+                            <Border.GestureRecognizers>
+                                <TapGestureRecognizer NumberOfTapsRequired="1"
+                                                      Command="{Binding Source={x:Reference this}, Path=EditCommand}"
+                                                      CommandParameter="{Binding .}" />
+                            </Border.GestureRecognizers>
+
+                            <Label Text="{Binding .}"
+                                   HorizontalOptions="Center"
+                                   VerticalOptions="Center" />
+                        </Border>
+                    </DataTemplate>
+                </BindableLayout.ItemTemplate>
+            </HorizontalStackLayout>
+
+            <Border StrokeThickness="2"
+                    MinimumWidthRequest="40"
+                    Stroke="#FFB703"
+                    Padding="8"
+                    Background="Transparent"
+                    VerticalOptions="Center">
+                <Border.StrokeShape>
+                    <RoundRectangle CornerRadius="24" />
+                </Border.StrokeShape>
+
+                <Border.GestureRecognizers>
+                    <TapGestureRecognizer NumberOfTapsRequired="1"
+                                          Command="{Binding Source={x:Reference this}, Path=AddCommand}" />
+                </Border.GestureRecognizers>
+
+                <Label Text="+"
+                       HorizontalOptions="Center"
+                       VerticalOptions="Center" />
+            </Border>
+        </HorizontalStackLayout>
+    </ScrollView>
+</ContentView>

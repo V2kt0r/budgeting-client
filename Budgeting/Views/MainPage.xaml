@@ -2,48 +2,58 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:controls="clr-namespace:Budgeting.Controls"
-             x:Class="Budgeting.Views.MainPage">
+             x:Class="Budgeting.Views.MainPage"
+             BackgroundColor="#023047">
 
-    <ScrollView>
-        <VerticalStackLayout
-            Spacing="25"
-            Padding="30,0"
-            VerticalOptions="Center">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
 
-            <Image
-                Source="dotnet_bot.png"
-                SemanticProperties.Description="Cute dot net bot waving hi to you!"
-                HeightRequest="200"
-                HorizontalOptions="Center" />
+        <ScrollView Grid.Row="0">
+            <VerticalStackLayout
+                Spacing="25"
+                Padding="30,0"
+                VerticalOptions="Center">
 
-            <Label
-                Text="Hello, World!"
-                SemanticProperties.HeadingLevel="Level1"
-                FontSize="32"
-                HorizontalOptions="Center" />
+                <Image
+                    Source="dotnet_bot.png"
+                    SemanticProperties.Description="Cute dot net bot waving hi to you!"
+                    HeightRequest="200"
+                    HorizontalOptions="Center" />
 
-            <Label
-                Text="Welcome to .NET Multi-platform App UI"
-                SemanticProperties.HeadingLevel="Level2"
-                SemanticProperties.Description="Welcome to dot net Multi platform App U I"
-                FontSize="18"
-                HorizontalOptions="Center" />
+                <Label
+                    Text="Hello, World!"
+                    SemanticProperties.HeadingLevel="Level1"
+                    FontSize="32"
+                    HorizontalOptions="Center" />
 
-            <Button
-                x:Name="CounterBtn"
-                Text="Click me"
-                SemanticProperties.Hint="Counts the number of times you click"
-                Clicked="OnCounterClicked"
-                HorizontalOptions="Center" />
+                <Label
+                    Text="Welcome to .NET Multi-platform App UI"
+                    SemanticProperties.HeadingLevel="Level2"
+                    SemanticProperties.Description="Welcome to dot net Multi platform App U I"
+                    FontSize="18"
+                    HorizontalOptions="Center" />
 
-            <Button Text="Logout"
-                    Command="{Binding LogoutCommand}" />
+                <Button
+                    x:Name="CounterBtn"
+                    Text="Click me"
+                    SemanticProperties.Hint="Counts the number of times you click"
+                    Clicked="OnCounterClicked"
+                    HorizontalOptions="Center" />
 
-            <controls:TransactionList Transactions="{Binding Transactions}"
-                                      TransactionSelectedCommand="{Binding TransactionSelectedCommand}"
-                                      FinishedLoading="{Binding FinishedLoadingTransactions}" />
+                <Button Text="Logout"
+                        Command="{Binding LogoutCommand}" />
 
-        </VerticalStackLayout>
-    </ScrollView>
+                <controls:TransactionList Transactions="{Binding Transactions}"
+                                          TransactionSelectedCommand="{Binding TransactionSelectedCommand}"
+                                          FinishedLoading="{Binding FinishedLoadingTransactions}" />
 
+            </VerticalStackLayout>
+        </ScrollView>
+
+        <controls:FloatingButton Grid.Row="0"
+                                 Text="+"
+                                 Command="{Binding AddTransactionCommand}" />
+    </Grid>
 </ContentPage>

@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<toolkit:Popup xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+               xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+               xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+               xmlns:models="clr-namespace:Org.OpenAPITools.Model"
+               xmlns:controls="clr-namespace:Budgeting.Controls"
+               x:Class="Budgeting.Views.Popups.AddTransactionPopup"
+               Color="Transparent">
+    <Border Padding="16"
+            Margin="16"
+            StrokeThickness="0"
+            BackgroundColor="#219EBC"
+            VerticalOptions="Center">
+        <Border.StrokeShape>
+            <RoundRectangle CornerRadius="16" />
+        </Border.StrokeShape>
+
+        <Grid RowSpacing="8">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            
+            <ScrollView Grid.Row="0"
+                        Orientation="Vertical"
+                        Padding="0,0,0,512">
+                <Grid ColumnSpacing="4" RowSpacing="8">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+
+                    <Label Grid.Row="0" Grid.ColumnSpan="2"
+                           Text="Transaction name" />
+                    <Entry Grid.Row="1" Grid.ColumnSpan="2"
+                           Placeholder="Name of the transaction"
+                           PlaceholderColor="#023047"
+                           Text="{Binding Name}" />
+
+                    <Label Grid.Row="2" Grid.ColumnSpan="2"
+                           Text="Description" />
+                    <Entry Grid.Row="3" Grid.ColumnSpan="2"
+                           Placeholder="Description of the transaction (Optional)"
+                           PlaceholderColor="#023047"
+                           Text="{Binding Description}" />
+
+                    <Label Grid.Row="4" Grid.Column="0"
+                           Text="Amount" />
+                    <Entry Grid.Row="5" Grid.Column="0"
+                           Placeholder="Amount of the transaction"
+                           PlaceholderColor="#023047"
+                           Text="{Binding Amount}"
+                           Keyboard="Numeric" />
+
+                    <Label Grid.Row="4" Grid.Column="1"
+                           Text="Currency" />
+                    <Picker Grid.Row="5" Grid.Column="1"
+                            Title="Currency"
+                            TitleColor="#023047"
+                            ItemsSource="{Binding CurrencyOptions}"
+                            SelectedItem="{Binding Currency}" />
+
+                    <Label Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="2"
+                           Text="Time of the transaction" />
+                    <HorizontalStackLayout Grid.Row="7" Grid.ColumnSpan="2"
+                                           Spacing="4">
+                        <DatePicker Date="{Binding Date}" />
+                        <TimePicker Time="{Binding Time}" />
+                    </HorizontalStackLayout>
+
+                    <controls:EditableTransactionItemList Grid.Row="8" Grid.ColumnSpan="2"
+                                                          TransactionItems="{Binding TransactionItems}"
+                                                          PurchaseCategories="{Binding PurchaseCategories.Result}"
+                                                          LastItem="{Binding LastItem, Mode=OneWayToSource}" />
+                </Grid>
+            </ScrollView>
+            
+            <Button Grid.Row="1"
+                    Text="Ok"
+                    Command="{Binding OkCommand}"
+                    CommandParameter="{Binding Source={RelativeSource Mode=FindAncestor, AncestorType={x:Type toolkit:Popup}}}" />
+        </Grid>
+    </Border>
+</toolkit:Popup>
