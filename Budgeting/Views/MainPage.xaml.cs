@@ -19,9 +19,9 @@ namespace Budgeting.Views
             await _viewModel.OnAppearingAsync();
         }
 
-        private async void Picker_SelectedIndexChanged(object sender, EventArgs e)
+        private async void CurrencyPicker_SelectedIndexChanged(object sender, EventArgs e)
         {
-            await _viewModel.LoadStatisticsAsync();
+            await _viewModel.OnCurrencyChangedAsync();
         }
     }
 

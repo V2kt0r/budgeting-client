@@ -1,10 +1,9 @@
 ﻿using Budgeting.Contracts.Services;
 using Budgeting.Controls;
-using Budgeting.Shells;
 using Budgeting.ViewModels.Base;
-using Budgeting.ViewModels.Popups;
 using Budgeting.Views;
 using CommunityToolkit.Maui.Core;
+using CommunityToolkit.Maui.Core.Extensions;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Microcharts;
@@ -17,27 +16,19 @@ using System.Diagnostics;
 
 namespace Budgeting.ViewModels
 {
-
-    public partial class MainPageViewModel : ViewModelBase
+    public partial class GroupPageViewModel : ViewModelBase
     {
         #region Attributes
 
-        private readonly INavigationService _navigationService;
         private readonly IAuthService _authService;
         private readonly Config.Config _config;
         private readonly IPopupService _popupService;
 
         [ObservableProperty]
-        private IEnumerable<TransactionRead> _transactions;
+        private ObservableCollection<GroupReadWithUserRole> _groups;
 
         [ObservableProperty]
-        private int _page = 1;
-
-        [ObservableProperty]
-        private bool _finishedLoadingTransactions = false;
-
-        [ObservableProperty]
-        private bool _finishedLoadingStatistics = false;
+        private GroupReadWithUserRole _selectedGroup;
 
         [ObservableProperty]
         private IEnumerable<TimeQueryWrapper> _afterPossibilities = new ObservableCollection<TimeQueryWrapper>()
@@ -59,6 +50,9 @@ namespace Budgeting.ViewModels
         private IEnumerable<Currency> _currencyOptions = Enum.GetValues(typeof(Currency)).Cast<Currency>();
 
         [ObservableProperty]
+        private bool _finishedLoadingStatistics = false;
+
+        [ObservableProperty]
         private PurchaseCategoryStatistics _purchaseCategoryStatistics;
 
         [ObservableProperty]
@@ -67,22 +61,29 @@ namespace Budgeting.ViewModels
         [ObservableProperty]
         private DonutChart _donutChart;
 
+        [ObservableProperty]
+        private IEnumerable<TransactionRead> _transactions;
+
+        [ObservableProperty]
+        private int _page = 1;
+
+        [ObservableProperty]
+        private bool _finishedLoadingTransactions = false;
+
         #endregion
 
         #region Properties
 
-        public IRelayCommand LogoutCommand => new AsyncRelayCommand(OnLogoutAsync);
-        public IRelayCommand TimeSelectionChangedCommand => new AsyncRelayCommand<DateTime?>(OnTimeSelectionChangedAsync);
-        public IRelayCommand TransactionSelectedCommand => new AsyncRelayCommand<TransactionRead>(OnTransactionSelectedAsync);
         public IRelayCommand AddTransactionCommand => new AsyncRelayCommand(OnAddTransactionAsync);
+        public IRelayCommand TimeSelectionChangedCommand => new AsyncRelayCommand<DateTime?>(OnTimeSelectionChanged);
+        public IRelayCommand TransactionSelectedCommand => new AsyncRelayCommand<TransactionRead>(OnTransactionSelectedAsync);
 
         #endregion
 
         #region Constructor
 
-        public MainPageViewModel(INavigationService navigationService, IAuthService authService, Config.Config config, IPopupService popupService)
+        public GroupPageViewModel(IAuthService authService, Config.Config config, IPopupService popupService)
         {
-            _navigationService = navigationService;
             _authService = authService;
             _config = config;
             _popupService = popupService;
@@ -96,7 +97,14 @@ namespace Budgeting.ViewModels
 
         public async Task OnAppearingAsync()
         {
+            await LoadUserGroups();
+            SelectedGroup = Groups.FirstOrDefault(defaultValue: null);
             await LoadStatisticsAsync(After.Time);
+            await LoadTransactionsAsync(After.Time);
+        }
+
+        public async Task OnGroupChangedAsync()
+        {
             await LoadTransactionsAsync(After.Time);
         }
 
@@ -109,7 +117,18 @@ namespace Budgeting.ViewModels
 
         #region Private Methods
 
-        private async Task OnTimeSelectionChangedAsync(DateTime? newTime)
+        private async Task LoadUserGroups()
+        {
+            var result = await new GroupApi(_config.Configuration).GetGroupsAsync();
+            Groups = result.Data.ToObservableCollection();
+        }
+
+        private async Task OnAddTransactionAsync()
+        {
+            throw new NotImplementedException();
+        }
+
+        private async Task OnTimeSelectionChanged(DateTime? newTime)
         {
             await LoadStatisticsAsync(newTime);
             await LoadTransactionsAsync(newTime);
@@ -121,8 +140,9 @@ namespace Budgeting.ViewModels
 
             try
             {
-                PurchaseCategoryStatistics = await new UserStatisticsApi(_config.Configuration).GetPurchaseCategoryStatisticsAsync
+                PurchaseCategoryStatistics = await new GroupStatisticsApi(_config.Configuration).GetGroupPurchaseCategoryStatisticsAsync
                 (
+                    groupUuid: SelectedGroup.Uuid,
                     after: after,
                     currency: Currency
                 );
@@ -163,8 +183,9 @@ namespace Budgeting.ViewModels
 
             try
             {
-                var transactionsPaginated = await new TransactionsApi(_config.Configuration).GetUserTransactionsAsync
+                var transactionsPaginated = await new GroupTransactionsApi(_config.Configuration).GetGroupTransactionsAsync
                 (
+                    groupUuid: SelectedGroup.Uuid,
                     after: after,
                     page: Page
                 );
@@ -182,12 +203,6 @@ namespace Budgeting.ViewModels
             FinishedLoadingTransactions = true;
         }
 
-        private async Task OnLogoutAsync()
-        {
-            await _authService.LogoutAsync();
-            Application.Current.MainPage = IPlatformApplication.Current.Services.GetService<UnauthorizedAppShell>();
-        }
-
         private async Task OnTransactionSelectedAsync(TransactionRead transaction)
         {
             var navigationParameters = new Dictionary<string, object>
@@ -195,13 +210,6 @@ namespace Budgeting.ViewModels
                 { "Transaction", transaction }
             };
             await Shell.Current.GoToAsync($"{nameof(TransactionDetailPage)}", parameters: navigationParameters);
-        }
-
-        private async Task OnAddTransactionAsync()
-        {
-            Debug.WriteLine("Showing popup");
-            var result = await _popupService.ShowPopupAsync<AddTransactionPopupViewModel>();
-            await LoadTransactionsAsync(After.Time);
         }
 
         #endregion

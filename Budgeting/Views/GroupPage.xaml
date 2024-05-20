@@ -1,12 +1,13 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:controls="clr-namespace:Budgeting.Controls"
-             xmlns:micro="clr-namespace:Microcharts.Maui;assembly=Microcharts.Maui"
              xmlns:vm="clr-namespace:Budgeting.ViewModels"
-             x:Class="Budgeting.Views.MainPage"
-             x:DataType="vm:MainPageViewModel"
-             BackgroundColor="#023047">
+             xmlns:controls="clr-namespace:Budgeting.Controls"
+             xmlns:models="clr-namespace:Org.OpenAPITools.Model"
+             xmlns:micro="clr-namespace:Microcharts.Maui;assembly=Microcharts.Maui"
+             x:Class="Budgeting.Views.GroupPage"
+             Title="GroupPage"
+             x:DataType="vm:GroupPageViewModel">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="*" />
@@ -17,24 +18,32 @@
             <Grid Padding="32, 16"
                   RowSpacing="16">
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="300" />
-                    <RowDefinition Height="*" />
+                    <RowDefinition Height="Auto" /> <!--Group, Time, Currency selection-->
+                    <RowDefinition Height="300" />  <!--Donut chart-->
+                    <RowDefinition Height="*" />    <!--Transaction list-->
                 </Grid.RowDefinitions>
 
                 <Grid Grid.Row="0">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*" />
                         <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
                     </Grid.ColumnDefinitions>
                     
-                    <controls:TimeQueryPicker Grid.Column="0"
-                                              Title="Time"
-                                              Possibilities="{Binding AfterPossibilities}"
-                                              SelectedItem="{Binding After}"
-                                              SelectedItemChangedCommand="{Binding TimeSelectionChangedCommand}" />
+                    <Picker Grid.Column="0"
+                            Title="Group"
+                            ItemsSource="{Binding Groups}"
+                            SelectedItem="{Binding SelectedGroup}"
+                            ItemDisplayBinding="{Binding Name}"
+                            SelectedIndexChanged="GroupPicker_SelectedIndexChanged" />
 
-                    <Picker Grid.Column="1"
+                    <controls:TimeQueryPicker Grid.Column="1"
+                                          Title="Time"
+                                          Possibilities="{Binding AfterPossibilities}"
+                                          SelectedItem="{Binding After}"
+                                          SelectedItemChangedCommand="{Binding TimeSelectionChangedCommand}" />
+
+                    <Picker Grid.Column="2"
                             Title="Currency"
                             ItemsSource="{Binding CurrencyOptions}"
                             SelectedItem="{Binding Currency}"
@@ -54,7 +63,7 @@
                                              VerticalOptions="Center"
                                              Spacing="8">
                             <ActivityIndicator IsRunning="True"
-                               Color="CadetBlue" />
+                                               Color="CadetBlue" />
                             <Label Text="Loading statistics..." />
                         </VerticalStackLayout>
                     </controls:If.False>

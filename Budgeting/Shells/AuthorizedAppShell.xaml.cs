@@ -15,6 +15,7 @@ namespace Budgeting.Shells
 
             // Register routes for the view models
             Routing.RegisterRoute(nameof(MainPage), typeof(MainPage));
+            Routing.RegisterRoute(nameof(GroupPage), typeof(GroupPage));
             Routing.RegisterRoute(nameof(TransactionDetailPage), typeof(TransactionDetailPage));
         }
     }

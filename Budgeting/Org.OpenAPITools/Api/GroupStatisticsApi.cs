@@ -24,78 +24,82 @@ namespace Org.OpenAPITools.Api
     /// <summary>
     /// Represents a collection of functions to interact with the API endpoints
     /// </summary>
-    public interface IUserStatisticsApiSync : IApiAccessor
+    public interface IGroupStatisticsApiSync : IApiAccessor
     {
         #region Synchronous Operations
         /// <summary>
-        /// Get Purchase Category Statistics
+        /// Get Group Purchase Category Statistics
         /// </summary>
         /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="groupUuid"></param>
         /// <param name="currency">Currency to use for the statistics (optional)</param>
         /// <param name="before">Get transactions before this date (optional)</param>
         /// <param name="after">Get transactions after this date (optional)</param>
         /// <param name="operationIndex">Index associated with the operation.</param>
         /// <returns>PurchaseCategoryStatistics</returns>
-        PurchaseCategoryStatistics GetPurchaseCategoryStatistics(Currency? currency = default(Currency?), DateTime? before = default(DateTime?), DateTime? after = default(DateTime?), int operationIndex = 0);
+        PurchaseCategoryStatistics GetGroupPurchaseCategoryStatistics(Guid groupUuid, Currency? currency = default(Currency?), DateTime? before = default(DateTime?), DateTime? after = default(DateTime?), int operationIndex = 0);
 
         /// <summary>
-        /// Get Purchase Category Statistics
+        /// Get Group Purchase Category Statistics
         /// </summary>
         /// <remarks>
         /// 
         /// </remarks>
         /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="groupUuid"></param>
         /// <param name="currency">Currency to use for the statistics (optional)</param>
         /// <param name="before">Get transactions before this date (optional)</param>
         /// <param name="after">Get transactions after this date (optional)</param>
         /// <param name="operationIndex">Index associated with the operation.</param>
         /// <returns>ApiResponse of PurchaseCategoryStatistics</returns>
-        ApiResponse<PurchaseCategoryStatistics> GetPurchaseCategoryStatisticsWithHttpInfo(Currency? currency = default(Currency?), DateTime? before = default(DateTime?), DateTime? after = default(DateTime?), int operationIndex = 0);
+        ApiResponse<PurchaseCategoryStatistics> GetGroupPurchaseCategoryStatisticsWithHttpInfo(Guid groupUuid, Currency? currency = default(Currency?), DateTime? before = default(DateTime?), DateTime? after = default(DateTime?), int operationIndex = 0);
         #endregion Synchronous Operations
     }
 
     /// <summary>
     /// Represents a collection of functions to interact with the API endpoints
     /// </summary>
-    public interface IUserStatisticsApiAsync : IApiAccessor
+    public interface IGroupStatisticsApiAsync : IApiAccessor
     {
         #region Asynchronous Operations
         /// <summary>
-        /// Get Purchase Category Statistics
+        /// Get Group Purchase Category Statistics
         /// </summary>
         /// <remarks>
         /// 
         /// </remarks>
         /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="groupUuid"></param>
         /// <param name="currency">Currency to use for the statistics (optional)</param>
         /// <param name="before">Get transactions before this date (optional)</param>
         /// <param name="after">Get transactions after this date (optional)</param>
         /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of PurchaseCategoryStatistics</returns>
-        System.Threading.Tasks.Task<PurchaseCategoryStatistics> GetPurchaseCategoryStatisticsAsync(Currency? currency = default(Currency?), DateTime? before = default(DateTime?), DateTime? after = default(DateTime?), int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<PurchaseCategoryStatistics> GetGroupPurchaseCategoryStatisticsAsync(Guid groupUuid, Currency? currency = default(Currency?), DateTime? before = default(DateTime?), DateTime? after = default(DateTime?), int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
         /// <summary>
-        /// Get Purchase Category Statistics
+        /// Get Group Purchase Category Statistics
         /// </summary>
         /// <remarks>
         /// 
         /// </remarks>
         /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="groupUuid"></param>
         /// <param name="currency">Currency to use for the statistics (optional)</param>
         /// <param name="before">Get transactions before this date (optional)</param>
         /// <param name="after">Get transactions after this date (optional)</param>
         /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (PurchaseCategoryStatistics)</returns>
-        System.Threading.Tasks.Task<ApiResponse<PurchaseCategoryStatistics>> GetPurchaseCategoryStatisticsWithHttpInfoAsync(Currency? currency = default(Currency?), DateTime? before = default(DateTime?), DateTime? after = default(DateTime?), int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<ApiResponse<PurchaseCategoryStatistics>> GetGroupPurchaseCategoryStatisticsWithHttpInfoAsync(Guid groupUuid, Currency? currency = default(Currency?), DateTime? before = default(DateTime?), DateTime? after = default(DateTime?), int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
         #endregion Asynchronous Operations
     }
 
     /// <summary>
     /// Represents a collection of functions to interact with the API endpoints
     /// </summary>
-    public interface IUserStatisticsApi : IUserStatisticsApiSync, IUserStatisticsApiAsync
+    public interface IGroupStatisticsApi : IGroupStatisticsApiSync, IGroupStatisticsApiAsync
     {
 
     }
@@ -103,23 +107,23 @@ namespace Org.OpenAPITools.Api
     /// <summary>
     /// Represents a collection of functions to interact with the API endpoints
     /// </summary>
-    public partial class UserStatisticsApi : IUserStatisticsApi
+    public partial class GroupStatisticsApi : IGroupStatisticsApi
     {
         private Org.OpenAPITools.Client.ExceptionFactory _exceptionFactory = (name, response) => null;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="UserStatisticsApi"/> class.
+        /// Initializes a new instance of the <see cref="GroupStatisticsApi"/> class.
         /// </summary>
         /// <returns></returns>
-        public UserStatisticsApi() : this((string)null)
+        public GroupStatisticsApi() : this((string)null)
         {
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="UserStatisticsApi"/> class.
+        /// Initializes a new instance of the <see cref="GroupStatisticsApi"/> class.
         /// </summary>
         /// <returns></returns>
-        public UserStatisticsApi(string basePath)
+        public GroupStatisticsApi(string basePath)
         {
             this.Configuration = Org.OpenAPITools.Client.Configuration.MergeConfigurations(
                 Org.OpenAPITools.Client.GlobalConfiguration.Instance,
@@ -131,12 +135,12 @@ namespace Org.OpenAPITools.Api
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="UserStatisticsApi"/> class
+        /// Initializes a new instance of the <see cref="GroupStatisticsApi"/> class
         /// using Configuration object
         /// </summary>
         /// <param name="configuration">An instance of Configuration</param>
         /// <returns></returns>
-        public UserStatisticsApi(Org.OpenAPITools.Client.Configuration configuration)
+        public GroupStatisticsApi(Org.OpenAPITools.Client.Configuration configuration)
         {
             if (configuration == null) throw new ArgumentNullException("configuration");
 
@@ -150,13 +154,13 @@ namespace Org.OpenAPITools.Api
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="UserStatisticsApi"/> class
+        /// Initializes a new instance of the <see cref="GroupStatisticsApi"/> class
         /// using a Configuration object and client instance.
         /// </summary>
         /// <param name="client">The client interface for synchronous API access.</param>
         /// <param name="asyncClient">The client interface for asynchronous API access.</param>
         /// <param name="configuration">The configuration object.</param>
-        public UserStatisticsApi(Org.OpenAPITools.Client.ISynchronousClient client, Org.OpenAPITools.Client.IAsynchronousClient asyncClient, Org.OpenAPITools.Client.IReadableConfiguration configuration)
+        public GroupStatisticsApi(Org.OpenAPITools.Client.ISynchronousClient client, Org.OpenAPITools.Client.IAsynchronousClient asyncClient, Org.OpenAPITools.Client.IReadableConfiguration configuration)
         {
             if (client == null) throw new ArgumentNullException("client");
             if (asyncClient == null) throw new ArgumentNullException("asyncClient");
@@ -210,30 +214,32 @@ namespace Org.OpenAPITools.Api
         }
 
         /// <summary>
-        /// Get Purchase Category Statistics 
+        /// Get Group Purchase Category Statistics 
         /// </summary>
         /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="groupUuid"></param>
         /// <param name="currency">Currency to use for the statistics (optional)</param>
         /// <param name="before">Get transactions before this date (optional)</param>
         /// <param name="after">Get transactions after this date (optional)</param>
         /// <param name="operationIndex">Index associated with the operation.</param>
         /// <returns>PurchaseCategoryStatistics</returns>
-        public PurchaseCategoryStatistics GetPurchaseCategoryStatistics(Currency? currency = default(Currency?), DateTime? before = default(DateTime?), DateTime? after = default(DateTime?), int operationIndex = 0)
+        public PurchaseCategoryStatistics GetGroupPurchaseCategoryStatistics(Guid groupUuid, Currency? currency = default(Currency?), DateTime? before = default(DateTime?), DateTime? after = default(DateTime?), int operationIndex = 0)
         {
-            Org.OpenAPITools.Client.ApiResponse<PurchaseCategoryStatistics> localVarResponse = GetPurchaseCategoryStatisticsWithHttpInfo(currency, before, after);
+            Org.OpenAPITools.Client.ApiResponse<PurchaseCategoryStatistics> localVarResponse = GetGroupPurchaseCategoryStatisticsWithHttpInfo(groupUuid, currency, before, after);
             return localVarResponse.Data;
         }
 
         /// <summary>
-        /// Get Purchase Category Statistics 
+        /// Get Group Purchase Category Statistics 
         /// </summary>
         /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="groupUuid"></param>
         /// <param name="currency">Currency to use for the statistics (optional)</param>
         /// <param name="before">Get transactions before this date (optional)</param>
         /// <param name="after">Get transactions after this date (optional)</param>
         /// <param name="operationIndex">Index associated with the operation.</param>
         /// <returns>ApiResponse of PurchaseCategoryStatistics</returns>
-        public Org.OpenAPITools.Client.ApiResponse<PurchaseCategoryStatistics> GetPurchaseCategoryStatisticsWithHttpInfo(Currency? currency = default(Currency?), DateTime? before = default(DateTime?), DateTime? after = default(DateTime?), int operationIndex = 0)
+        public Org.OpenAPITools.Client.ApiResponse<PurchaseCategoryStatistics> GetGroupPurchaseCategoryStatisticsWithHttpInfo(Guid groupUuid, Currency? currency = default(Currency?), DateTime? before = default(DateTime?), DateTime? after = default(DateTime?), int operationIndex = 0)
         {
             Org.OpenAPITools.Client.RequestOptions localVarRequestOptions = new Org.OpenAPITools.Client.RequestOptions();
 
@@ -257,6 +263,7 @@ namespace Org.OpenAPITools.Api
                 localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
             }
 
+            localVarRequestOptions.PathParameters.Add("group_uuid", Org.OpenAPITools.Client.ClientUtils.ParameterToString(groupUuid)); // path parameter
             if (currency != null)
             {
                 localVarRequestOptions.QueryParameters.Add(Org.OpenAPITools.Client.ClientUtils.ParameterToMultiMap("", "currency", currency));
@@ -270,7 +277,7 @@ namespace Org.OpenAPITools.Api
                 localVarRequestOptions.QueryParameters.Add(Org.OpenAPITools.Client.ClientUtils.ParameterToMultiMap("", "after", after));
             }
 
-            localVarRequestOptions.Operation = "UserStatisticsApi.GetPurchaseCategoryStatistics";
+            localVarRequestOptions.Operation = "GroupStatisticsApi.GetGroupPurchaseCategoryStatistics";
             localVarRequestOptions.OperationIndex = operationIndex;
 
             // authentication (OAuth2PasswordBearer) required
@@ -291,10 +298,10 @@ namespace Org.OpenAPITools.Api
             }
 
             // make the HTTP request
-            var localVarResponse = this.Client.Get<PurchaseCategoryStatistics>("/api/v1/stats/by-purchase-category", localVarRequestOptions, this.Configuration);
+            var localVarResponse = this.Client.Get<PurchaseCategoryStatistics>("/api/v1/group/{group_uuid}/stats/by-purchase-category", localVarRequestOptions, this.Configuration);
             if (this.ExceptionFactory != null)
             {
-                Exception _exception = this.ExceptionFactory("GetPurchaseCategoryStatistics", localVarResponse);
+                Exception _exception = this.ExceptionFactory("GetGroupPurchaseCategoryStatistics", localVarResponse);
                 if (_exception != null)
                 {
                     throw _exception;
@@ -305,32 +312,34 @@ namespace Org.OpenAPITools.Api
         }
 
         /// <summary>
-        /// Get Purchase Category Statistics 
+        /// Get Group Purchase Category Statistics 
         /// </summary>
         /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="groupUuid"></param>
         /// <param name="currency">Currency to use for the statistics (optional)</param>
         /// <param name="before">Get transactions before this date (optional)</param>
         /// <param name="after">Get transactions after this date (optional)</param>
         /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of PurchaseCategoryStatistics</returns>
-        public async System.Threading.Tasks.Task<PurchaseCategoryStatistics> GetPurchaseCategoryStatisticsAsync(Currency? currency = default(Currency?), DateTime? before = default(DateTime?), DateTime? after = default(DateTime?), int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public async System.Threading.Tasks.Task<PurchaseCategoryStatistics> GetGroupPurchaseCategoryStatisticsAsync(Guid groupUuid, Currency? currency = default(Currency?), DateTime? before = default(DateTime?), DateTime? after = default(DateTime?), int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
-            Org.OpenAPITools.Client.ApiResponse<PurchaseCategoryStatistics> localVarResponse = await GetPurchaseCategoryStatisticsWithHttpInfoAsync(currency, before, after, operationIndex, cancellationToken).ConfigureAwait(false);
+            Org.OpenAPITools.Client.ApiResponse<PurchaseCategoryStatistics> localVarResponse = await GetGroupPurchaseCategoryStatisticsWithHttpInfoAsync(groupUuid, currency, before, after, operationIndex, cancellationToken).ConfigureAwait(false);
             return localVarResponse.Data;
         }
 
         /// <summary>
-        /// Get Purchase Category Statistics 
+        /// Get Group Purchase Category Statistics 
         /// </summary>
         /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="groupUuid"></param>
         /// <param name="currency">Currency to use for the statistics (optional)</param>
         /// <param name="before">Get transactions before this date (optional)</param>
         /// <param name="after">Get transactions after this date (optional)</param>
         /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (PurchaseCategoryStatistics)</returns>
-        public async System.Threading.Tasks.Task<Org.OpenAPITools.Client.ApiResponse<PurchaseCategoryStatistics>> GetPurchaseCategoryStatisticsWithHttpInfoAsync(Currency? currency = default(Currency?), DateTime? before = default(DateTime?), DateTime? after = default(DateTime?), int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public async System.Threading.Tasks.Task<Org.OpenAPITools.Client.ApiResponse<PurchaseCategoryStatistics>> GetGroupPurchaseCategoryStatisticsWithHttpInfoAsync(Guid groupUuid, Currency? currency = default(Currency?), DateTime? before = default(DateTime?), DateTime? after = default(DateTime?), int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
 
             Org.OpenAPITools.Client.RequestOptions localVarRequestOptions = new Org.OpenAPITools.Client.RequestOptions();
@@ -355,6 +364,7 @@ namespace Org.OpenAPITools.Api
                 localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
             }
 
+            localVarRequestOptions.PathParameters.Add("group_uuid", Org.OpenAPITools.Client.ClientUtils.ParameterToString(groupUuid)); // path parameter
             if (currency != null)
             {
                 localVarRequestOptions.QueryParameters.Add(Org.OpenAPITools.Client.ClientUtils.ParameterToMultiMap("", "currency", currency));
@@ -368,7 +378,7 @@ namespace Org.OpenAPITools.Api
                 localVarRequestOptions.QueryParameters.Add(Org.OpenAPITools.Client.ClientUtils.ParameterToMultiMap("", "after", after));
             }
 
-            localVarRequestOptions.Operation = "UserStatisticsApi.GetPurchaseCategoryStatistics";
+            localVarRequestOptions.Operation = "GroupStatisticsApi.GetGroupPurchaseCategoryStatistics";
             localVarRequestOptions.OperationIndex = operationIndex;
 
             // authentication (OAuth2PasswordBearer) required
@@ -389,11 +399,11 @@ namespace Org.OpenAPITools.Api
             }
 
             // make the HTTP request
-            var localVarResponse = await this.AsynchronousClient.GetAsync<PurchaseCategoryStatistics>("/api/v1/stats/by-purchase-category", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
+            var localVarResponse = await this.AsynchronousClient.GetAsync<PurchaseCategoryStatistics>("/api/v1/group/{group_uuid}/stats/by-purchase-category", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
 
             if (this.ExceptionFactory != null)
             {
-                Exception _exception = this.ExceptionFactory("GetPurchaseCategoryStatistics", localVarResponse);
+                Exception _exception = this.ExceptionFactory("GetGroupPurchaseCategoryStatistics", localVarResponse);
                 if (_exception != null)
                 {
                     throw _exception;
