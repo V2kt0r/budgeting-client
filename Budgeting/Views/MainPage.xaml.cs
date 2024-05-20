@@ -18,11 +18,6 @@ namespace Budgeting.Views
             base.OnAppearing();
             await _viewModel.OnAppearingAsync();
         }
-
-        private async void Picker_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            await _viewModel.LoadStatisticsAsync();
-        }
     }
 
 }

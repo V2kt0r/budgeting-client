@@ -80,6 +80,9 @@
 	  <MauiXaml Update="Controls\TagPills.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	  <MauiXaml Update="Controls\TimeQueryPicker.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="Controls\TransactionItemList.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>

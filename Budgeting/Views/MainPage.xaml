@@ -3,9 +3,10 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:controls="clr-namespace:Budgeting.Controls"
              xmlns:micro="clr-namespace:Microcharts.Maui;assembly=Microcharts.Maui"
+             xmlns:vm="clr-namespace:Budgeting.ViewModels"
              x:Class="Budgeting.Views.MainPage"
+             x:DataType="vm:MainPageViewModel"
              BackgroundColor="#023047">
-
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="*" />
@@ -21,12 +22,11 @@
                     <RowDefinition Height="*" />
                 </Grid.RowDefinitions>
 
-                <Picker Grid.Row="0"
-                        Title="Time"
-                        ItemsSource="{Binding AfterPossibilities}"
-                        SelectedItem="{Binding After}"
-                        ItemDisplayBinding="{Binding Title}"
-                        SelectedIndexChanged="Picker_SelectedIndexChanged" />
+                <controls:TimeQueryPicker Grid.Row="0"
+                                          Title="Time"
+                                          Possibilities="{Binding AfterPossibilities}"
+                                          SelectedItem="{Binding After}"
+                                          SelectedItemChangedCommand="{Binding TimeSelectionChangedCommand}" />
 
                 <controls:If Grid.Row="1"
                              Condition="{Binding FinishedLoadingStatistics}">

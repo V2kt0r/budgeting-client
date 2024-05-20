@@ -1,4 +1,5 @@
 ﻿using Budgeting.Contracts.Services;
+using Budgeting.Controls;
 using Budgeting.Shells;
 using Budgeting.ViewModels.Base;
 using Budgeting.ViewModels.Popups;
@@ -16,16 +17,6 @@ using System.Diagnostics;
 
 namespace Budgeting.ViewModels
 {
-    public partial class TimeQueryWrapper : ObservableObject
-    {
-        [ObservableProperty]
-        private DateTime? _time;
-
-        [ObservableProperty]
-        private string _title;
-
-        public DateTime? LocalTime => Time?.ToLocalTime();
-    }
 
     public partial class MainPageViewModel : ViewModelBase
     {
@@ -75,6 +66,7 @@ namespace Budgeting.ViewModels
         #region Properties
 
         public IRelayCommand LogoutCommand => new AsyncRelayCommand(OnLogoutAsync);
+        public IRelayCommand TimeSelectionChangedCommand => new AsyncRelayCommand<DateTime?>(OnTimeSelectionChangedAsync);
         public IRelayCommand TransactionSelectedCommand => new AsyncRelayCommand<TransactionRead>(OnTransactionSelectedAsync);
         public IRelayCommand AddTransactionCommand => new AsyncRelayCommand(OnAddTransactionAsync);
 
@@ -99,17 +91,16 @@ namespace Budgeting.ViewModels
         public async Task OnAppearingAsync()
         {
             await LoadTransactionsAsync();
-            await LoadStatisticsAsync();
+            await LoadStatisticsAsync(After.Time);
         }
 
-        public async Task LoadStatisticsAsync()
+        public async Task LoadStatisticsAsync(DateTime? after)
         {
             FinishedLoadingStatistics = false;
 
             try
             {
-                PurchaseCategoryStatistics = await new UserStatisticsApi(_config.Configuration).GetPurchaseCategoryStatisticsAsync(after: After.Time);
-
+                PurchaseCategoryStatistics = await new UserStatisticsApi(_config.Configuration).GetPurchaseCategoryStatisticsAsync(after: after);
                 var chartEntries = new List<ChartEntry>();
                 foreach (var item in PurchaseCategoryStatistics.Items)
                 {
@@ -144,6 +135,11 @@ namespace Budgeting.ViewModels
         #endregion
 
         #region Private Methods
+
+        private async Task OnTimeSelectionChangedAsync(DateTime? newTime)
+        {
+            await LoadStatisticsAsync(newTime);
+        }
 
         private async Task LoadTransactionsAsync()
         {
