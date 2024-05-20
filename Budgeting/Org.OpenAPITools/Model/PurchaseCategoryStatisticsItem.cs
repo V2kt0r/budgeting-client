@@ -26,36 +26,51 @@ using OpenAPIDateConverter = Org.OpenAPITools.Client.OpenAPIDateConverter;
 namespace Org.OpenAPITools.Model
 {
     /// <summary>
-    /// GroupUpdate
+    /// PurchaseCategoryStatisticsItem
     /// </summary>
-    [DataContract(Name = "GroupUpdate")]
-    public partial class GroupUpdate : IValidatableObject
+    [DataContract(Name = "PurchaseCategoryStatisticsItem")]
+    public partial class PurchaseCategoryStatisticsItem : IValidatableObject
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="GroupUpdate" /> class.
+        /// Initializes a new instance of the <see cref="PurchaseCategoryStatisticsItem" /> class.
         /// </summary>
         [JsonConstructorAttribute]
-        protected GroupUpdate() { }
+        protected PurchaseCategoryStatisticsItem() { }
         /// <summary>
-        /// Initializes a new instance of the <see cref="GroupUpdate" /> class.
+        /// Initializes a new instance of the <see cref="PurchaseCategoryStatisticsItem" /> class.
         /// </summary>
-        /// <param name="name">The name of the group (required).</param>
-        public GroupUpdate(string name = default(string))
+        /// <param name="purchaseCategory">purchaseCategory (required).</param>
+        /// <param name="itemCount">itemCount (required).</param>
+        /// <param name="total">total (required).</param>
+        public PurchaseCategoryStatisticsItem(PurchaseCategoryRead purchaseCategory = default(PurchaseCategoryRead), int itemCount = default(int), decimal total = default(decimal))
         {
-            // to ensure "name" is required (not null)
-            if (name == null)
+            // to ensure "purchaseCategory" is required (not null)
+            if (purchaseCategory == null)
             {
-                throw new ArgumentNullException("name is a required property for GroupUpdate and cannot be null");
+                throw new ArgumentNullException("purchaseCategory is a required property for PurchaseCategoryStatisticsItem and cannot be null");
             }
-            this.Name = name;
+            this.PurchaseCategory = purchaseCategory;
+            this.ItemCount = itemCount;
+            this.Total = total;
         }
 
         /// <summary>
-        /// The name of the group
+        /// Gets or Sets PurchaseCategory
         /// </summary>
-        /// <value>The name of the group</value>
-        [DataMember(Name = "name", IsRequired = true, EmitDefaultValue = true)]
-        public string Name { get; set; }
+        [DataMember(Name = "purchase_category", IsRequired = true, EmitDefaultValue = true)]
+        public PurchaseCategoryRead PurchaseCategory { get; set; }
+
+        /// <summary>
+        /// Gets or Sets ItemCount
+        /// </summary>
+        [DataMember(Name = "item_count", IsRequired = true, EmitDefaultValue = true)]
+        public int ItemCount { get; set; }
+
+        /// <summary>
+        /// Gets or Sets Total
+        /// </summary>
+        [DataMember(Name = "total", IsRequired = true, EmitDefaultValue = true)]
+        public decimal Total { get; set; }
 
         /// <summary>
         /// Returns the string presentation of the object
@@ -64,8 +79,10 @@ namespace Org.OpenAPITools.Model
         public override string ToString()
         {
             StringBuilder sb = new StringBuilder();
-            sb.Append("class GroupUpdate {\n");
-            sb.Append("  Name: ").Append(Name).Append("\n");
+            sb.Append("class PurchaseCategoryStatisticsItem {\n");
+            sb.Append("  PurchaseCategory: ").Append(PurchaseCategory).Append("\n");
+            sb.Append("  ItemCount: ").Append(ItemCount).Append("\n");
+            sb.Append("  Total: ").Append(Total).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
         }

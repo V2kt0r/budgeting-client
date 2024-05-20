@@ -24,25 +24,21 @@ namespace Org.OpenAPITools.Api
     /// <summary>
     /// Represents a collection of functions to interact with the API endpoints
     /// </summary>
-    public interface IUserTransactionItemsApiSync : IApiAccessor
+    public interface IUserStatisticsApiSync : IApiAccessor
     {
         #region Synchronous Operations
         /// <summary>
-        /// Get User Transaction Items
+        /// Get Purchase Category Statistics
         /// </summary>
         /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="before">Get transactions before this date (optional)</param>
         /// <param name="after">Get transactions after this date (optional)</param>
-        /// <param name="page"> (optional, default to 1)</param>
-        /// <param name="itemsPerPage"> (optional, default to 10)</param>
-        /// <param name="tagNames">List of tag names to filter transactions by (optional)</param>
-        /// <param name="purchaseCategoryUuid"> (optional)</param>
         /// <param name="operationIndex">Index associated with the operation.</param>
-        /// <returns>PaginatedListResponseTransactionItemReadWithTransactionData</returns>
-        PaginatedListResponseTransactionItemReadWithTransactionData GetUserTransactionItems(DateTime? before = default(DateTime?), DateTime? after = default(DateTime?), int? page = default(int?), int? itemsPerPage = default(int?), List<string>? tagNames = default(List<string>?), Guid? purchaseCategoryUuid = default(Guid?), int operationIndex = 0);
+        /// <returns>PurchaseCategoryStatistics</returns>
+        PurchaseCategoryStatistics GetPurchaseCategoryStatistics(DateTime? before = default(DateTime?), DateTime? after = default(DateTime?), int operationIndex = 0);
 
         /// <summary>
-        /// Get User Transaction Items
+        /// Get Purchase Category Statistics
         /// </summary>
         /// <remarks>
         /// 
@@ -50,24 +46,20 @@ namespace Org.OpenAPITools.Api
         /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="before">Get transactions before this date (optional)</param>
         /// <param name="after">Get transactions after this date (optional)</param>
-        /// <param name="page"> (optional, default to 1)</param>
-        /// <param name="itemsPerPage"> (optional, default to 10)</param>
-        /// <param name="tagNames">List of tag names to filter transactions by (optional)</param>
-        /// <param name="purchaseCategoryUuid"> (optional)</param>
         /// <param name="operationIndex">Index associated with the operation.</param>
-        /// <returns>ApiResponse of PaginatedListResponseTransactionItemReadWithTransactionData</returns>
-        ApiResponse<PaginatedListResponseTransactionItemReadWithTransactionData> GetUserTransactionItemsWithHttpInfo(DateTime? before = default(DateTime?), DateTime? after = default(DateTime?), int? page = default(int?), int? itemsPerPage = default(int?), List<string>? tagNames = default(List<string>?), Guid? purchaseCategoryUuid = default(Guid?), int operationIndex = 0);
+        /// <returns>ApiResponse of PurchaseCategoryStatistics</returns>
+        ApiResponse<PurchaseCategoryStatistics> GetPurchaseCategoryStatisticsWithHttpInfo(DateTime? before = default(DateTime?), DateTime? after = default(DateTime?), int operationIndex = 0);
         #endregion Synchronous Operations
     }
 
     /// <summary>
     /// Represents a collection of functions to interact with the API endpoints
     /// </summary>
-    public interface IUserTransactionItemsApiAsync : IApiAccessor
+    public interface IUserStatisticsApiAsync : IApiAccessor
     {
         #region Asynchronous Operations
         /// <summary>
-        /// Get User Transaction Items
+        /// Get Purchase Category Statistics
         /// </summary>
         /// <remarks>
         /// 
@@ -75,17 +67,13 @@ namespace Org.OpenAPITools.Api
         /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="before">Get transactions before this date (optional)</param>
         /// <param name="after">Get transactions after this date (optional)</param>
-        /// <param name="page"> (optional, default to 1)</param>
-        /// <param name="itemsPerPage"> (optional, default to 10)</param>
-        /// <param name="tagNames">List of tag names to filter transactions by (optional)</param>
-        /// <param name="purchaseCategoryUuid"> (optional)</param>
         /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of PaginatedListResponseTransactionItemReadWithTransactionData</returns>
-        System.Threading.Tasks.Task<PaginatedListResponseTransactionItemReadWithTransactionData> GetUserTransactionItemsAsync(DateTime? before = default(DateTime?), DateTime? after = default(DateTime?), int? page = default(int?), int? itemsPerPage = default(int?), List<string>? tagNames = default(List<string>?), Guid? purchaseCategoryUuid = default(Guid?), int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        /// <returns>Task of PurchaseCategoryStatistics</returns>
+        System.Threading.Tasks.Task<PurchaseCategoryStatistics> GetPurchaseCategoryStatisticsAsync(DateTime? before = default(DateTime?), DateTime? after = default(DateTime?), int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
         /// <summary>
-        /// Get User Transaction Items
+        /// Get Purchase Category Statistics
         /// </summary>
         /// <remarks>
         /// 
@@ -93,21 +81,17 @@ namespace Org.OpenAPITools.Api
         /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="before">Get transactions before this date (optional)</param>
         /// <param name="after">Get transactions after this date (optional)</param>
-        /// <param name="page"> (optional, default to 1)</param>
-        /// <param name="itemsPerPage"> (optional, default to 10)</param>
-        /// <param name="tagNames">List of tag names to filter transactions by (optional)</param>
-        /// <param name="purchaseCategoryUuid"> (optional)</param>
         /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of ApiResponse (PaginatedListResponseTransactionItemReadWithTransactionData)</returns>
-        System.Threading.Tasks.Task<ApiResponse<PaginatedListResponseTransactionItemReadWithTransactionData>> GetUserTransactionItemsWithHttpInfoAsync(DateTime? before = default(DateTime?), DateTime? after = default(DateTime?), int? page = default(int?), int? itemsPerPage = default(int?), List<string>? tagNames = default(List<string>?), Guid? purchaseCategoryUuid = default(Guid?), int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        /// <returns>Task of ApiResponse (PurchaseCategoryStatistics)</returns>
+        System.Threading.Tasks.Task<ApiResponse<PurchaseCategoryStatistics>> GetPurchaseCategoryStatisticsWithHttpInfoAsync(DateTime? before = default(DateTime?), DateTime? after = default(DateTime?), int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
         #endregion Asynchronous Operations
     }
 
     /// <summary>
     /// Represents a collection of functions to interact with the API endpoints
     /// </summary>
-    public interface IUserTransactionItemsApi : IUserTransactionItemsApiSync, IUserTransactionItemsApiAsync
+    public interface IUserStatisticsApi : IUserStatisticsApiSync, IUserStatisticsApiAsync
     {
 
     }
@@ -115,23 +99,23 @@ namespace Org.OpenAPITools.Api
     /// <summary>
     /// Represents a collection of functions to interact with the API endpoints
     /// </summary>
-    public partial class UserTransactionItemsApi : IUserTransactionItemsApi
+    public partial class UserStatisticsApi : IUserStatisticsApi
     {
         private Org.OpenAPITools.Client.ExceptionFactory _exceptionFactory = (name, response) => null;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="UserTransactionItemsApi"/> class.
+        /// Initializes a new instance of the <see cref="UserStatisticsApi"/> class.
         /// </summary>
         /// <returns></returns>
-        public UserTransactionItemsApi() : this((string)null)
+        public UserStatisticsApi() : this((string)null)
         {
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="UserTransactionItemsApi"/> class.
+        /// Initializes a new instance of the <see cref="UserStatisticsApi"/> class.
         /// </summary>
         /// <returns></returns>
-        public UserTransactionItemsApi(string basePath)
+        public UserStatisticsApi(string basePath)
         {
             this.Configuration = Org.OpenAPITools.Client.Configuration.MergeConfigurations(
                 Org.OpenAPITools.Client.GlobalConfiguration.Instance,
@@ -143,12 +127,12 @@ namespace Org.OpenAPITools.Api
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="UserTransactionItemsApi"/> class
+        /// Initializes a new instance of the <see cref="UserStatisticsApi"/> class
         /// using Configuration object
         /// </summary>
         /// <param name="configuration">An instance of Configuration</param>
         /// <returns></returns>
-        public UserTransactionItemsApi(Org.OpenAPITools.Client.Configuration configuration)
+        public UserStatisticsApi(Org.OpenAPITools.Client.Configuration configuration)
         {
             if (configuration == null) throw new ArgumentNullException("configuration");
 
@@ -162,13 +146,13 @@ namespace Org.OpenAPITools.Api
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="UserTransactionItemsApi"/> class
+        /// Initializes a new instance of the <see cref="UserStatisticsApi"/> class
         /// using a Configuration object and client instance.
         /// </summary>
         /// <param name="client">The client interface for synchronous API access.</param>
         /// <param name="asyncClient">The client interface for asynchronous API access.</param>
         /// <param name="configuration">The configuration object.</param>
-        public UserTransactionItemsApi(Org.OpenAPITools.Client.ISynchronousClient client, Org.OpenAPITools.Client.IAsynchronousClient asyncClient, Org.OpenAPITools.Client.IReadableConfiguration configuration)
+        public UserStatisticsApi(Org.OpenAPITools.Client.ISynchronousClient client, Org.OpenAPITools.Client.IAsynchronousClient asyncClient, Org.OpenAPITools.Client.IReadableConfiguration configuration)
         {
             if (client == null) throw new ArgumentNullException("client");
             if (asyncClient == null) throw new ArgumentNullException("asyncClient");
@@ -222,36 +206,28 @@ namespace Org.OpenAPITools.Api
         }
 
         /// <summary>
-        /// Get User Transaction Items 
+        /// Get Purchase Category Statistics 
         /// </summary>
         /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="before">Get transactions before this date (optional)</param>
         /// <param name="after">Get transactions after this date (optional)</param>
-        /// <param name="page"> (optional, default to 1)</param>
-        /// <param name="itemsPerPage"> (optional, default to 10)</param>
-        /// <param name="tagNames">List of tag names to filter transactions by (optional)</param>
-        /// <param name="purchaseCategoryUuid"> (optional)</param>
         /// <param name="operationIndex">Index associated with the operation.</param>
-        /// <returns>PaginatedListResponseTransactionItemReadWithTransactionData</returns>
-        public PaginatedListResponseTransactionItemReadWithTransactionData GetUserTransactionItems(DateTime? before = default(DateTime?), DateTime? after = default(DateTime?), int? page = default(int?), int? itemsPerPage = default(int?), List<string>? tagNames = default(List<string>?), Guid? purchaseCategoryUuid = default(Guid?), int operationIndex = 0)
+        /// <returns>PurchaseCategoryStatistics</returns>
+        public PurchaseCategoryStatistics GetPurchaseCategoryStatistics(DateTime? before = default(DateTime?), DateTime? after = default(DateTime?), int operationIndex = 0)
         {
-            Org.OpenAPITools.Client.ApiResponse<PaginatedListResponseTransactionItemReadWithTransactionData> localVarResponse = GetUserTransactionItemsWithHttpInfo(before, after, page, itemsPerPage, tagNames, purchaseCategoryUuid);
+            Org.OpenAPITools.Client.ApiResponse<PurchaseCategoryStatistics> localVarResponse = GetPurchaseCategoryStatisticsWithHttpInfo(before, after);
             return localVarResponse.Data;
         }
 
         /// <summary>
-        /// Get User Transaction Items 
+        /// Get Purchase Category Statistics 
         /// </summary>
         /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="before">Get transactions before this date (optional)</param>
         /// <param name="after">Get transactions after this date (optional)</param>
-        /// <param name="page"> (optional, default to 1)</param>
-        /// <param name="itemsPerPage"> (optional, default to 10)</param>
-        /// <param name="tagNames">List of tag names to filter transactions by (optional)</param>
-        /// <param name="purchaseCategoryUuid"> (optional)</param>
         /// <param name="operationIndex">Index associated with the operation.</param>
-        /// <returns>ApiResponse of PaginatedListResponseTransactionItemReadWithTransactionData</returns>
-        public Org.OpenAPITools.Client.ApiResponse<PaginatedListResponseTransactionItemReadWithTransactionData> GetUserTransactionItemsWithHttpInfo(DateTime? before = default(DateTime?), DateTime? after = default(DateTime?), int? page = default(int?), int? itemsPerPage = default(int?), List<string>? tagNames = default(List<string>?), Guid? purchaseCategoryUuid = default(Guid?), int operationIndex = 0)
+        /// <returns>ApiResponse of PurchaseCategoryStatistics</returns>
+        public Org.OpenAPITools.Client.ApiResponse<PurchaseCategoryStatistics> GetPurchaseCategoryStatisticsWithHttpInfo(DateTime? before = default(DateTime?), DateTime? after = default(DateTime?), int operationIndex = 0)
         {
             Org.OpenAPITools.Client.RequestOptions localVarRequestOptions = new Org.OpenAPITools.Client.RequestOptions();
 
@@ -283,24 +259,8 @@ namespace Org.OpenAPITools.Api
             {
                 localVarRequestOptions.QueryParameters.Add(Org.OpenAPITools.Client.ClientUtils.ParameterToMultiMap("", "after", after));
             }
-            if (page != null)
-            {
-                localVarRequestOptions.QueryParameters.Add(Org.OpenAPITools.Client.ClientUtils.ParameterToMultiMap("", "page", page));
-            }
-            if (itemsPerPage != null)
-            {
-                localVarRequestOptions.QueryParameters.Add(Org.OpenAPITools.Client.ClientUtils.ParameterToMultiMap("", "items_per_page", itemsPerPage));
-            }
-            if (tagNames != null)
-            {
-                localVarRequestOptions.QueryParameters.Add(Org.OpenAPITools.Client.ClientUtils.ParameterToMultiMap("multi", "tag_names", tagNames));
-            }
-            if (purchaseCategoryUuid != null)
-            {
-                localVarRequestOptions.QueryParameters.Add(Org.OpenAPITools.Client.ClientUtils.ParameterToMultiMap("", "purchase_category_uuid", purchaseCategoryUuid));
-            }
 
-            localVarRequestOptions.Operation = "UserTransactionItemsApi.GetUserTransactionItems";
+            localVarRequestOptions.Operation = "UserStatisticsApi.GetPurchaseCategoryStatistics";
             localVarRequestOptions.OperationIndex = operationIndex;
 
             // authentication (OAuth2PasswordBearer) required
@@ -321,10 +281,10 @@ namespace Org.OpenAPITools.Api
             }
 
             // make the HTTP request
-            var localVarResponse = this.Client.Get<PaginatedListResponseTransactionItemReadWithTransactionData>("/api/v1/transaction-items", localVarRequestOptions, this.Configuration);
+            var localVarResponse = this.Client.Get<PurchaseCategoryStatistics>("/api/v1/stats/by-purchase-category", localVarRequestOptions, this.Configuration);
             if (this.ExceptionFactory != null)
             {
-                Exception _exception = this.ExceptionFactory("GetUserTransactionItems", localVarResponse);
+                Exception _exception = this.ExceptionFactory("GetPurchaseCategoryStatistics", localVarResponse);
                 if (_exception != null)
                 {
                     throw _exception;
@@ -335,38 +295,30 @@ namespace Org.OpenAPITools.Api
         }
 
         /// <summary>
-        /// Get User Transaction Items 
+        /// Get Purchase Category Statistics 
         /// </summary>
         /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="before">Get transactions before this date (optional)</param>
         /// <param name="after">Get transactions after this date (optional)</param>
-        /// <param name="page"> (optional, default to 1)</param>
-        /// <param name="itemsPerPage"> (optional, default to 10)</param>
-        /// <param name="tagNames">List of tag names to filter transactions by (optional)</param>
-        /// <param name="purchaseCategoryUuid"> (optional)</param>
         /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of PaginatedListResponseTransactionItemReadWithTransactionData</returns>
-        public async System.Threading.Tasks.Task<PaginatedListResponseTransactionItemReadWithTransactionData> GetUserTransactionItemsAsync(DateTime? before = default(DateTime?), DateTime? after = default(DateTime?), int? page = default(int?), int? itemsPerPage = default(int?), List<string>? tagNames = default(List<string>?), Guid? purchaseCategoryUuid = default(Guid?), int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        /// <returns>Task of PurchaseCategoryStatistics</returns>
+        public async System.Threading.Tasks.Task<PurchaseCategoryStatistics> GetPurchaseCategoryStatisticsAsync(DateTime? before = default(DateTime?), DateTime? after = default(DateTime?), int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
-            Org.OpenAPITools.Client.ApiResponse<PaginatedListResponseTransactionItemReadWithTransactionData> localVarResponse = await GetUserTransactionItemsWithHttpInfoAsync(before, after, page, itemsPerPage, tagNames, purchaseCategoryUuid, operationIndex, cancellationToken).ConfigureAwait(false);
+            Org.OpenAPITools.Client.ApiResponse<PurchaseCategoryStatistics> localVarResponse = await GetPurchaseCategoryStatisticsWithHttpInfoAsync(before, after, operationIndex, cancellationToken).ConfigureAwait(false);
             return localVarResponse.Data;
         }
 
         /// <summary>
-        /// Get User Transaction Items 
+        /// Get Purchase Category Statistics 
         /// </summary>
         /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="before">Get transactions before this date (optional)</param>
         /// <param name="after">Get transactions after this date (optional)</param>
-        /// <param name="page"> (optional, default to 1)</param>
-        /// <param name="itemsPerPage"> (optional, default to 10)</param>
-        /// <param name="tagNames">List of tag names to filter transactions by (optional)</param>
-        /// <param name="purchaseCategoryUuid"> (optional)</param>
         /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of ApiResponse (PaginatedListResponseTransactionItemReadWithTransactionData)</returns>
-        public async System.Threading.Tasks.Task<Org.OpenAPITools.Client.ApiResponse<PaginatedListResponseTransactionItemReadWithTransactionData>> GetUserTransactionItemsWithHttpInfoAsync(DateTime? before = default(DateTime?), DateTime? after = default(DateTime?), int? page = default(int?), int? itemsPerPage = default(int?), List<string>? tagNames = default(List<string>?), Guid? purchaseCategoryUuid = default(Guid?), int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        /// <returns>Task of ApiResponse (PurchaseCategoryStatistics)</returns>
+        public async System.Threading.Tasks.Task<Org.OpenAPITools.Client.ApiResponse<PurchaseCategoryStatistics>> GetPurchaseCategoryStatisticsWithHttpInfoAsync(DateTime? before = default(DateTime?), DateTime? after = default(DateTime?), int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
 
             Org.OpenAPITools.Client.RequestOptions localVarRequestOptions = new Org.OpenAPITools.Client.RequestOptions();
@@ -399,24 +351,8 @@ namespace Org.OpenAPITools.Api
             {
                 localVarRequestOptions.QueryParameters.Add(Org.OpenAPITools.Client.ClientUtils.ParameterToMultiMap("", "after", after));
             }
-            if (page != null)
-            {
-                localVarRequestOptions.QueryParameters.Add(Org.OpenAPITools.Client.ClientUtils.ParameterToMultiMap("", "page", page));
-            }
-            if (itemsPerPage != null)
-            {
-                localVarRequestOptions.QueryParameters.Add(Org.OpenAPITools.Client.ClientUtils.ParameterToMultiMap("", "items_per_page", itemsPerPage));
-            }
-            if (tagNames != null)
-            {
-                localVarRequestOptions.QueryParameters.Add(Org.OpenAPITools.Client.ClientUtils.ParameterToMultiMap("multi", "tag_names", tagNames));
-            }
-            if (purchaseCategoryUuid != null)
-            {
-                localVarRequestOptions.QueryParameters.Add(Org.OpenAPITools.Client.ClientUtils.ParameterToMultiMap("", "purchase_category_uuid", purchaseCategoryUuid));
-            }
 
-            localVarRequestOptions.Operation = "UserTransactionItemsApi.GetUserTransactionItems";
+            localVarRequestOptions.Operation = "UserStatisticsApi.GetPurchaseCategoryStatistics";
             localVarRequestOptions.OperationIndex = operationIndex;
 
             // authentication (OAuth2PasswordBearer) required
@@ -437,11 +373,11 @@ namespace Org.OpenAPITools.Api
             }
 
             // make the HTTP request
-            var localVarResponse = await this.AsynchronousClient.GetAsync<PaginatedListResponseTransactionItemReadWithTransactionData>("/api/v1/transaction-items", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
+            var localVarResponse = await this.AsynchronousClient.GetAsync<PurchaseCategoryStatistics>("/api/v1/stats/by-purchase-category", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
 
             if (this.ExceptionFactory != null)
             {
-                Exception _exception = this.ExceptionFactory("GetUserTransactionItems", localVarResponse);
+                Exception _exception = this.ExceptionFactory("GetPurchaseCategoryStatistics", localVarResponse);
                 if (_exception != null)
                 {
                     throw _exception;

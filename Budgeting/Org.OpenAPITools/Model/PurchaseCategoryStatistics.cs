@@ -26,33 +26,51 @@ using OpenAPIDateConverter = Org.OpenAPITools.Client.OpenAPIDateConverter;
 namespace Org.OpenAPITools.Model
 {
     /// <summary>
-    /// PurchaseCategoryUpdate
+    /// PurchaseCategoryStatistics
     /// </summary>
-    [DataContract(Name = "PurchaseCategoryUpdate")]
-    public partial class PurchaseCategoryUpdate : IValidatableObject
+    [DataContract(Name = "PurchaseCategoryStatistics")]
+    public partial class PurchaseCategoryStatistics : IValidatableObject
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="PurchaseCategoryUpdate" /> class.
+        /// Initializes a new instance of the <see cref="PurchaseCategoryStatistics" /> class.
         /// </summary>
-        /// <param name="categoryName">categoryName.</param>
-        /// <param name="categoryDescription">categoryDescription.</param>
-        public PurchaseCategoryUpdate(string categoryName = default(string), string categoryDescription = default(string))
+        [JsonConstructorAttribute]
+        protected PurchaseCategoryStatistics() { }
+        /// <summary>
+        /// Initializes a new instance of the <see cref="PurchaseCategoryStatistics" /> class.
+        /// </summary>
+        /// <param name="items">items (required).</param>
+        /// <param name="itemCount">itemCount (required).</param>
+        /// <param name="total">total (required).</param>
+        public PurchaseCategoryStatistics(List<PurchaseCategoryStatisticsItem> items = default(List<PurchaseCategoryStatisticsItem>), int itemCount = default(int), decimal total = default(decimal))
         {
-            this.CategoryName = categoryName;
-            this.CategoryDescription = categoryDescription;
+            // to ensure "items" is required (not null)
+            if (items == null)
+            {
+                throw new ArgumentNullException("items is a required property for PurchaseCategoryStatistics and cannot be null");
+            }
+            this.Items = items;
+            this.ItemCount = itemCount;
+            this.Total = total;
         }
 
         /// <summary>
-        /// Gets or Sets CategoryName
+        /// Gets or Sets Items
         /// </summary>
-        [DataMember(Name = "category_name", EmitDefaultValue = true)]
-        public string CategoryName { get; set; }
+        [DataMember(Name = "items", IsRequired = true, EmitDefaultValue = true)]
+        public List<PurchaseCategoryStatisticsItem> Items { get; set; }
 
         /// <summary>
-        /// Gets or Sets CategoryDescription
+        /// Gets or Sets ItemCount
         /// </summary>
-        [DataMember(Name = "category_description", EmitDefaultValue = true)]
-        public string CategoryDescription { get; set; }
+        [DataMember(Name = "item_count", IsRequired = true, EmitDefaultValue = true)]
+        public int ItemCount { get; set; }
+
+        /// <summary>
+        /// Gets or Sets Total
+        /// </summary>
+        [DataMember(Name = "total", IsRequired = true, EmitDefaultValue = true)]
+        public decimal Total { get; set; }
 
         /// <summary>
         /// Returns the string presentation of the object
@@ -61,9 +79,10 @@ namespace Org.OpenAPITools.Model
         public override string ToString()
         {
             StringBuilder sb = new StringBuilder();
-            sb.Append("class PurchaseCategoryUpdate {\n");
-            sb.Append("  CategoryName: ").Append(CategoryName).Append("\n");
-            sb.Append("  CategoryDescription: ").Append(CategoryDescription).Append("\n");
+            sb.Append("class PurchaseCategoryStatistics {\n");
+            sb.Append("  Items: ").Append(Items).Append("\n");
+            sb.Append("  ItemCount: ").Append(ItemCount).Append("\n");
+            sb.Append("  Total: ").Append(Total).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
         }
@@ -84,12 +103,6 @@ namespace Org.OpenAPITools.Model
         /// <returns>Validation Result</returns>
         IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
         {
-            // CategoryDescription (string) maxLength
-            if (this.CategoryDescription != null && this.CategoryDescription.Length > 500)
-            {
-                yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for CategoryDescription, length must be less than 500.", new [] { "CategoryDescription" });
-            }
-
             yield break;
         }
     }
