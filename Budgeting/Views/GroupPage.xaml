@@ -7,7 +7,8 @@
              xmlns:micro="clr-namespace:Microcharts.Maui;assembly=Microcharts.Maui"
              x:Class="Budgeting.Views.GroupPage"
              Title="GroupPage"
-             x:DataType="vm:GroupPageViewModel">
+             x:DataType="vm:GroupPageViewModel"
+             BackgroundColor="#023047">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="*" />
@@ -63,7 +64,7 @@
                                              VerticalOptions="Center"
                                              Spacing="8">
                             <ActivityIndicator IsRunning="True"
-                                               Color="CadetBlue" />
+                                               Color="#FFB703" />
                             <Label Text="Loading statistics..." />
                         </VerticalStackLayout>
                     </controls:If.False>

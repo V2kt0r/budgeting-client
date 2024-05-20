@@ -71,7 +71,7 @@
                     <VerticalStackLayout HorizontalOptions="Center"
                                          VerticalOptions="Center">
                         <ActivityIndicator IsRunning="True"
-                                           Color="CadetBlue" />
+                                           Color="#FFB703" />
                         <Label Text="Loading transactions..." />
                     </VerticalStackLayout>
                 </controls:If.False>
