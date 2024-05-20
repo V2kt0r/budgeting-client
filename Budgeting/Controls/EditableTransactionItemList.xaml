@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:models="clr-namespace:Org.OpenAPITools.Model"
+             xmlns:controls="clr-namespace:Budgeting.Controls"
+             x:Class="Budgeting.Controls.EditableTransactionItemList"
+             x:Name="this">
+    <VerticalStackLayout Spacing="8">
+        <VerticalStackLayout BindableLayout.ItemsSource="{Binding Source={x:Reference this}, Path=TransactionItemCreateInternals}"
+                             Spacing="8">
+            <!--Template-->
+            <BindableLayout.ItemTemplate>
+                <DataTemplate x:DataType="controls:TransactionItemCreateInternal">
+                    <Grid ColumnSpacing="8">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+
+                        <controls:EditableTransactionItem Grid.Column="0"
+                                                          Name="{Binding Name, Mode=TwoWay}"
+                                                          Description="{Binding Description, Mode=TwoWay}"
+                                                          Amount="{Binding Amount, Mode=TwoWay}"
+                                                          TagNames="{Binding TagNames, Mode=TwoWay}"
+                                                          PurchaseCategory="{Binding PurchaseCategory, Mode=TwoWay}"
+                                                          PurchaseCategories="{Binding Source={x:Reference this}, Path=PurchaseCategories}" />
+
+                        <controls:RoundButton Grid.Column="1"
+                                              Text="-"
+                                              VerticalOptions="Center"
+                                              HorizontalOptions="End"
+                                              Size="32"
+                                              FontSize="16"
+                                              TextColor="White"
+                                              BackgroundColor="#FB8500"
+                                              Command="{Binding Source={x:Reference this}, Path=RemoveCommand}"
+                                              CommandParameter="{Binding .}" />
+                    </Grid>
+                </DataTemplate>
+            </BindableLayout.ItemTemplate>
+        </VerticalStackLayout>
+
+        <!--Add button-->
+        <controls:RoundButton Text="+"
+                              VerticalOptions="End"
+                              HorizontalOptions="Center"
+                              Size="32"
+                              FontSize="16"
+                              TextColor="White"
+                              BackgroundColor="#FB8500"
+                              Command="{Binding Source={x:Reference this}, Path=AddCommand}" />
+    </VerticalStackLayout>
+</ContentView>

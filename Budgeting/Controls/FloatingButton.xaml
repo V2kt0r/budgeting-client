@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:controls="clr-namespace:Budgeting.Controls"
+             x:Class="Budgeting.Controls.FloatingButton"
+             x:Name="this">
+    <controls:RoundButton Text="{Binding Source={x:Reference this}, Path=Text}"
+                          VerticalOptions="End"
+                          HorizontalOptions="End"
+                          Margin="0,0,32,32"
+                          Size="56"
+                          FontSize="32"
+                          TextColor="White"
+                          BackgroundColor="Orange"
+                          Command="{Binding Source={x:Reference this}, Path=Command}"
+                          CommandParameter="{Binding Source={x:Reference this}, Path=CommandParameter}" />
+</ContentView>

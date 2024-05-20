@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:models="clr-namespace:Org.OpenAPITools.Model"
+             xmlns:controls="clr-namespace:Budgeting.Controls"
+             x:Class="Budgeting.Views.TransactionDetailPage"
+             Title="TransactionDetailPage"
+             BackgroundColor="#219EBC">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <ScrollView Grid.Row="0">
+            <VerticalStackLayout Spacing="8"
+                                 HorizontalOptions="Center">
+                <HorizontalStackLayout Spacing="8"
+                                       VerticalOptions="Center">
+                    <VerticalStackLayout Spacing="4">
+                        <Label Text="{Binding Transaction.Name}" />
+                        <Label Text="{Binding Transaction.Description}" />
+                    </VerticalStackLayout>
+
+                    <HorizontalStackLayout Spacing="4">
+                        <Label Text="{Binding Transaction.Amount}" />
+                        <Label Text="{Binding Transaction.Currency}" />
+                    </HorizontalStackLayout>
+
+                    <Label Text="{Binding Transaction.TransactionItems.Count, StringFormat='{0} items'}" />
+                </HorizontalStackLayout>
+
+                <controls:TransactionItemList Transaction="{Binding Transaction}"
+                                              TransactionItems="{Binding Transaction.TransactionItems}"
+                                              TransactionItemSelectedCommand="{Binding TransactionItemSelectedCommand}" />
+            </VerticalStackLayout>
+        </ScrollView>
+
+        <controls:FloatingButton Grid.Row="0"
+                                 Text="+"
+                                 Command="{Binding AddTransactionItemCommand}"
+                                 CommandParameter="{Binding Transaction}" />
+    </Grid>
+</ContentPage>

@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:Budgeting.Controls"
+             xmlns:models="clr-namespace:Org.OpenAPITools.Model"
+             xmlns:controls="clr-namespace:Budgeting.Controls"
+             x:Class="Budgeting.Controls.TransactionList"
+             x:Name="this">
+    <VerticalStackLayout BindableLayout.ItemsSource="{Binding Source={x:Reference this}, Path=Transactions}"
+                         Spacing="8"
+                         HorizontalOptions="Center">
+        <BindableLayout.ItemTemplate>
+            <DataTemplate x:DataType="models:TransactionRead">
+                <Border StrokeThickness="0"
+                        BackgroundColor="#219EBC">
+                    <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="16" />
+                    </Border.StrokeShape>
+
+                    <Border.GestureRecognizers>
+                        <TapGestureRecognizer NumberOfTapsRequired="1"
+                                              Command="{Binding Source={x:Reference this}, Path=TransactionSelectedCommand}"
+                                              CommandParameter="{Binding .}" />
+                    </Border.GestureRecognizers>
+
+                    <Grid Padding="8"
+                          ColumnSpacing="16">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+
+                        <VerticalStackLayout Grid.Column="0"
+                                             Spacing="4"
+                                             VerticalOptions="Center">
+                            <Label Text="{Binding Name}"
+                                   LineBreakMode="TailTruncation" />
+                            <Label Text="{Binding Description}"
+                                   FontAttributes="Italic"
+                                   LineBreakMode="TailTruncation" />
+                        </VerticalStackLayout>
+
+                        <HorizontalStackLayout Grid.Column="1"
+                                               Spacing="4">
+                            <Label Grid.Column="1"
+                                   Text="{Binding Amount}"
+                                   VerticalOptions="Center" />
+
+                            <Label Grid.Column="2"
+                                   Text="{Binding Currency}"
+                                   VerticalOptions="Center" />
+                        </HorizontalStackLayout>
+
+                        <Label Grid.Column="2"
+                               Text="{Binding TransactionItems.Count, StringFormat='{0} items'}"
+                               VerticalOptions="Center" />
+                    </Grid>
+                </Border>
+            </DataTemplate>
+        </BindableLayout.ItemTemplate>
+
+        <BindableLayout.EmptyView>
+            <controls:If Condition="{Binding Source={x:Reference this}, Path=FinishedLoading}">
+                <controls:If.True>
+                    <Label Text="No transactions found"
+                           HorizontalOptions="Center"
+                           VerticalOptions="Center" />
+                </controls:If.True>
+                <controls:If.False>
+                    <VerticalStackLayout HorizontalOptions="Center"
+                                         VerticalOptions="Center">
+                        <ActivityIndicator IsRunning="True"
+                                           Color="#FFB703" />
+                        <Label Text="Loading transactions..." />
+                    </VerticalStackLayout>
+                </controls:If.False>
+            </controls:If>
+        </BindableLayout.EmptyView>
+    </VerticalStackLayout>
+</ContentView>

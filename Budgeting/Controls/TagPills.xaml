@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Budgeting.Controls.TagPills"
+             x:Name="this">
+    <ScrollView Orientation="Horizontal">
+        <HorizontalStackLayout BindableLayout.ItemsSource="{Binding Source={x:Reference this}, Path=Tags}"
+                               Spacing="8">
+            <BindableLayout.ItemTemplate>
+                <DataTemplate x:DataType="x:String">
+                    <Border StrokeThickness="0"
+                            Background="DarkCyan"
+                            Padding="8">
+                        <Border.StrokeShape>
+                            <RoundRectangle CornerRadius="16" />
+                        </Border.StrokeShape>
+
+                        <Label Text="{Binding .}"
+                               HorizontalOptions="Center"
+                               VerticalOptions="Center" />
+                    </Border>
+                </DataTemplate>
+            </BindableLayout.ItemTemplate>
+        </HorizontalStackLayout>
+    </ScrollView>
+</ContentView>
