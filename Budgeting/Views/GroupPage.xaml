@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:Budgeting.ViewModels"
+             xmlns:controls="clr-namespace:Budgeting.Controls"
+             xmlns:models="clr-namespace:Org.OpenAPITools.Model"
+             xmlns:micro="clr-namespace:Microcharts.Maui;assembly=Microcharts.Maui"
+             x:Class="Budgeting.Views.GroupPage"
+             Title="GroupPage"
+             x:DataType="vm:GroupPageViewModel">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <ScrollView Grid.Row="0"
+                    Padding="0,0,0,128">
+            <Grid Padding="32, 16"
+                  RowSpacing="16">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" /> <!--Group selection-->
+                    <RowDefinition Height="Auto" /> <!--Time selection-->
+                    <RowDefinition Height="300" />  <!--Donut chart-->
+                    <RowDefinition Height="*" />    <!--Transaction list-->
+                </Grid.RowDefinitions>
+
+                <Picker Grid.Row="0"
+                        Title="Group"
+                        ItemsSource="{Binding Source={x:Reference vm}, Path=Groups}"
+                        SelectedItem="{Binding Source={x:Reference vm}, Path=SelectedGroup}"
+                        x:DataType="models:GroupReadWithUserRole"
+                        ItemDisplayBinding="{Binding Name}" />
+
+                <controls:TimeQueryPicker Grid.Row="1"
+                                          Title="Time"
+                                          Possibilities="{Binding AfterPossibilities}"
+                                          SelectedItem="{Binding After}"
+                                          SelectedItemChangedCommand="{Binding TimeSelectionChangedCommand}" />
+
+                <controls:If Grid.Row="2"
+                             Condition="{Binding FinishedLoadingStatistics}">
+                    <controls:If.True>
+                        <micro:ChartView HeightRequest="300" WidthRequest="300"
+                                         HorizontalOptions="Center"
+                                         Chart="{Binding DonutChart}" />
+                    </controls:If.True>
+
+                    <controls:If.False>
+                        <VerticalStackLayout HorizontalOptions="Center"
+                                             VerticalOptions="Center"
+                                             Spacing="8">
+                            <ActivityIndicator IsRunning="True"
+                                               Color="CadetBlue" />
+                            <Label Text="Loading statistics..." />
+                        </VerticalStackLayout>
+                    </controls:If.False>
+                </controls:If>
+
+                <controls:TransactionList Grid.Row="3"
+                                          Transactions="{Binding Transactions}"
+                                          TransactionSelectedCommand="{Binding TransactionSelectedCommand}"
+                                          FinishedLoading="{Binding FinishedLoadingTransactions}" />
+            </Grid>
+        </ScrollView>
+
+        <controls:FloatingButton Grid.Row="0"
+                                 Text="+"
+                                 Command="{Binding AddTransactionCommand}" />
+    </Grid>
+</ContentPage>
