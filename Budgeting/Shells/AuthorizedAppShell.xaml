@@ -41,7 +41,7 @@
     <MenuItem Text="Logout" Command="{Binding LogoutCommand}" />
 
     <Shell.FlyoutFooter>
-        <Label Text="v0.1.0-alpha"
+        <Label Text="v0.1.0"
                HorizontalOptions="Center" />
     </Shell.FlyoutFooter>
 </Shell>

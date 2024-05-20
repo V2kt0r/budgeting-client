@@ -15,11 +15,11 @@
 		<ApplicationTitle>Budgeting</ApplicationTitle>
 
 		<!-- App Identifier -->
-		<ApplicationId>com.companyname.budgeting</ApplicationId>
+		<ApplicationId>com.l72gid.budgeting</ApplicationId>
 		<ApplicationIdGuid>b54f5bbb-3503-4079-ac84-1bb30390dad3</ApplicationIdGuid>
 
 		<!-- Versions -->
-		<ApplicationDisplayVersion>1.0</ApplicationDisplayVersion>
+		<ApplicationDisplayVersion>0.1.0</ApplicationDisplayVersion>
 		<ApplicationVersion>1</ApplicationVersion>
 
 		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'ios'">11.0</SupportedOSPlatformVersion>

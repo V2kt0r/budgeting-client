@@ -54,7 +54,7 @@
                                              VerticalOptions="Center"
                                              Spacing="8">
                             <ActivityIndicator IsRunning="True"
-                               Color="CadetBlue" />
+                                               Color="#FFB703" />
                             <Label Text="Loading statistics..." />
                         </VerticalStackLayout>
                     </controls:If.False>
